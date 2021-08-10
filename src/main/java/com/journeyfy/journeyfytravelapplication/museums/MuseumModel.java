@@ -1,5 +1,4 @@
 package com.journeyfy.journeyfytravelapplication.museums;
-
 import lombok.*;
 
 @ToString
@@ -17,5 +16,4 @@ public class MuseumModel {
     private double price;
     private String cityName;
     private String siteLink;
-
 }
