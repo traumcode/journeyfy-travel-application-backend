@@ -1,19 +1,21 @@
 package com.journeyfy.journeyfytravelapplication.clubs;
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
-@RequestMapping(path = "museums")
+@RequestMapping(path = "clubs", produces = "application/json")
 public class ClubController {
-    @GetMapping
-    public List<ClubModel> getAllClubs() {
-        return Arrays.asList(
+
+
+    @GetMapping(value = "/{cityName}")
+    public List<ClubModel> getAllClubs(@PathVariable("cityName") String cityName) {
+        List<ClubModel> allClubs = Arrays.asList(
                 new ClubModel(1L,
                         "Berghain",
                         " Am Wriezener Bahnhof, 10243 Berlin, Germany",
@@ -21,7 +23,7 @@ public class ClubController {
                         "Berghain (pronounced [bɛʁkhaɪn]) is a nightclub in Berlin, Germany. It is named after its location near the border between Kreuzberg and Friedrichshain in Berlin, and is a short walk from Berlin Ostbahnhof main line railway station.",
                         "https://www.atravelthing.com/wp-content/uploads/2018/04/The-Berghain-club-in-Berlin.jpg",
                         4.0
-                        ),
+                ),
                 new ClubModel(2L,
                         "Tresor",
                         "Köpenicker Str. 70, 10179 Berlin, Germany",
@@ -29,7 +31,7 @@ public class ClubController {
                         "Tresor (German for safe or vault) is an underground techno nightclub in Berlin and a record label.",
                         "https://static.dw.com/image/17368811_403.jpg",
                         4.3
-                        ),
+                ),
                 new ClubModel(3L,
                         "Hoppetosse",
                         "Eichenstraße 4, 12435 Berlin, Germany",
@@ -119,5 +121,6 @@ public class ClubController {
                         5
                 )
         );
+        return allClubs.stream().filter(club -> club.getCityName().equals(cityName)).collect(Collectors.toList());
     }
 }
