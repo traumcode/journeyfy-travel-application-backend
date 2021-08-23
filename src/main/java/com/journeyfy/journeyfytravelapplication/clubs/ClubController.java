@@ -20,7 +20,7 @@ public class ClubController {
                     "Berlin",
                     "Berghain (pronounced [bɛʁkhaɪn]) is a nightclub in Berlin, Germany. It is named after its location near the border between Kreuzberg and Friedrichshain in Berlin, and is a short walk from Berlin Ostbahnhof main line railway station.",
                     "https://www.atravelthing.com/wp-content/uploads/2018/04/The-Berghain-club-in-Berlin.jpg",
-                    4.0
+                    5.0
             ),
             new ClubModel(2L,
                     "Tresor",
