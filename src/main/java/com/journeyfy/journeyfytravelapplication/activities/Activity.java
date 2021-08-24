@@ -14,8 +14,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Table(name = "activity")
+@Entity
 public class Activity {
     @Id
     @SequenceGenerator(name = "activity_sequence", sequenceName = "activity_sequence", allocationSize = 1)
@@ -27,11 +27,11 @@ public class Activity {
     private double rating;
     private double price;
     private String cityName;
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Post> posts;
     @ManyToOne
     @JoinColumn(name = "wish_id")
     @JsonBackReference
     private Wish wish;
-    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<Post> posts;
 }

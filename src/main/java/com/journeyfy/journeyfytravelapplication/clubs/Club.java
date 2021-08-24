@@ -13,8 +13,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Table(name = "club")
+@Entity
 public class Club {
     @Id
     @SequenceGenerator(name = "club_sequence", sequenceName = "club_sequence", allocationSize = 1)
@@ -26,11 +26,11 @@ public class Club {
     private String description;
     private String pictureLink;
     private double rating;
+    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Post> posts;
     @ManyToOne
     @JoinColumn(name = "wish_id")
     @JsonBackReference
     private Wish wish;
-    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<Post> posts;
 }
