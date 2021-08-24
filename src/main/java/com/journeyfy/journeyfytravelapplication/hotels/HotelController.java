@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 @RequestMapping(path = "hotels", produces = "application/json")
 public class HotelController {
 
-    public static List<HotelModel> hotels = Arrays.asList(
-            new HotelModel(1L,
+    public static List<Hotel> hotels = Arrays.asList(
+            new Hotel(1L,
                     "Le Tsuba Hotel",
                     4,
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/3a/f9/01/le-tsuba-hotel.jpg?w=1200&h=-1&s=1",
@@ -21,7 +21,7 @@ public class HotelController {
                     4.5,
                     "Paris",
                     "https://www.tripadvisor.com/Hotel_Review-g187147-d10521834-Reviews-Le_Tsuba_Hotel-Paris_Ile_de_France.html"),
-            new HotelModel(2L,
+            new Hotel(2L,
                     "Hotel la Nouvelle Republique",
                     3,
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/4a/e7/60/chambre-triple.jpg?w=1200&h=-1&s=1",
@@ -30,7 +30,7 @@ public class HotelController {
                     5.0,
                     "Paris",
                     "https://www.tripadvisor.com/Hotel_Review-g187147-d12829774-Reviews-Hotel_la_Nouvelle_Republique-Paris_Ile_de_France.html"),
-            new HotelModel(3L,
+            new Hotel(3L,
                     "InterContinental Paris - Le Grand",
                     4,
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/28/bd/f7/view-from-property.jpg?w=1200&h=-1&s=1",
@@ -39,7 +39,7 @@ public class HotelController {
                     4.5,
                     "Paris",
                     "https://www.tripadvisor.com/Hotel_Review-g187147-d207742-Reviews-InterContinental_Paris_Le_Grand-Paris_Ile_de_France.html"),
-            new HotelModel(4L,
+            new Hotel(4L,
                     "Hotel La Manufacture",
                     3,
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0a/f2/0a/f3/chambre-eiffel.jpg?w=900&h=-1&s=1",
@@ -48,7 +48,7 @@ public class HotelController {
                     4.5,
                     "Paris",
                     "https://www.tripadvisor.com/Hotel_Review-g187147-d197563-Reviews-Hotel_La_Manufacture-Paris_Ile_de_France.html"),
-            new HotelModel(5L,
+            new Hotel(5L,
                     "Grand Hotel du Palais Royal",
                     5,
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/0f/c2/71/junior-suite.jpg?w=1200&h=-1&s=1",
@@ -57,7 +57,7 @@ public class HotelController {
                     5.0,
                     "Paris",
                     "https://www.tripadvisor.com/Hotel_Review-g187147-d617625-Reviews-Grand_Hotel_du_Palais_Royal-Paris_Ile_de_France.html"),
-            new HotelModel(1L,
+            new Hotel(1L,
                     "Hotel Carlton Lyon - MGallery Collection",
                     4,
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0f/e1/a7/08/view-from-our-room.jpg?w=1200&h=-1&s=1",
@@ -74,7 +74,7 @@ public class HotelController {
                     4.5,
                     "Lyon",
                     "https://www.tripadvisor.com/Hotel_Review-g187265-d232355-Reviews-Hotel_Carlton_Lyon_MGallery_Collection-Lyon_Rhone_Auvergne_Rhone_Alpes.html"),
-            new HotelModel(2L,
+            new Hotel(2L,
                     "Hotelo, l'hotel au coeur de Lyon",
                     2,
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0a/6d/c4/e4/imag4061-largejpg.jpg?w=800&h=-1&s=1",
@@ -83,7 +83,7 @@ public class HotelController {
                     4.5,
                     "Lyon",
                     "https://www.tripadvisor.com/Hotel_Review-g187265-d1377912-Reviews-Hotelo_l_hotel_au_coeur_de_Lyon-Lyon_Rhone_Auvergne_Rhone_Alpes.html"),
-            new HotelModel(3L,
+            new Hotel(3L,
                     "Boscolo Lyon Hotel & Spa",
                     5,
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/59/a1/54/fredericdurantet.jpg?w=1200&h=-1&s=1",
@@ -92,7 +92,7 @@ public class HotelController {
                     4.5,
                     "Lyon",
                     "https://www.tripadvisor.com/Hotel_Review-g187265-d15111966-Reviews-Boscolo_Lyon_Hotel_Spa-Lyon_Rhone_Auvergne_Rhone_Alpes.html"),
-            new HotelModel(1L,
+            new Hotel(1L,
                     "H10 Madison",
                     4.5,
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/41/96/56/h10-madison.jpg?w=1200&h=-1&s=1",
@@ -101,7 +101,7 @@ public class HotelController {
                     5.0,
                     "Barcelona",
                     "https://www.tripadvisor.com/Hotel_Review-g187497-d13223478-Reviews-H10_Madison-Barcelona_Catalonia.html"),
-            new HotelModel(2L,
+            new Hotel(2L,
                     "Serras",
                     5,
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/66/69/4e/rooftop-the-serras.jpg?w=1200&h=-1&s=1",
@@ -110,7 +110,7 @@ public class HotelController {
                     5.0,
                     "Barcelona",
                     "https://www.tripadvisor.com/Hotel_Review-g187497-d7142609-Reviews-Serras-Barcelona_Catalonia.html"),
-            new HotelModel(3L,
+            new Hotel(3L,
                     "Hotel Jazz",
                     3,
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/88/db/08/hotel-jazz-pool.jpg?w=1200&h=-1&s=1",
@@ -119,7 +119,7 @@ public class HotelController {
                     4.5,
                     "Barcelona",
                     "https://www.tripadvisor.com/Hotel_Review-g187497-d296916-Reviews-Hotel_Jazz-Barcelona_Catalonia.html"),
-            new HotelModel(1L,
+            new Hotel(1L,
                     "Hotel Malcom and Barret",
                     3,
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/5b/94/b3/hotel-malcom-and-barret.jpg?w=1200&h=-1&s=1",
@@ -128,7 +128,7 @@ public class HotelController {
                     4.5,
                     "Valencia",
                     "https://www.tripadvisor.com/Hotel_Review-g187529-d206949-Reviews-Hotel_Malcom_and_Barret-Valencia_Province_of_Valencia_Valencian_Country.html"),
-            new HotelModel(2L,
+            new Hotel(2L,
                     "Vincci Palace",
                     4,
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/56/ac/3a/habitacion-superior.jpg?w=1200&h=-1&s=1",
@@ -137,7 +137,7 @@ public class HotelController {
                     4.0,
                     "Valencia",
                     "https://www.tripadvisor.com/Hotel_Review-g187529-d652524-Reviews-Vincci_Palace-Valencia_Province_of_Valencia_Valencian_Country.html"),
-            new HotelModel(3L,
+            new Hotel(3L,
                     "Valencia Center Hotel",
                     4,
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/df/18/e4/608670-pool.jpg?w=600&h=-1&s=1",
@@ -156,7 +156,7 @@ public class HotelController {
                     4.0,
                     "Valencia",
                     "https://www.tripadvisor.com/Hotel_Review-g187529-d543230-Reviews-Valencia_Center_Hotel-Valencia_Province_of_Valencia_Valencian_Country.html"),
-            new HotelModel(1L,
+            new Hotel(1L,
                     "Radisson Blu Hotel",
                     4.5,
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/6a/af/33/nikolai-suite-living.jpg?w=1100&h=-1&s=1",
@@ -165,7 +165,7 @@ public class HotelController {
                     4.5,
                     "Berlin",
                     "https://www.tripadvisor.com/Hotel_Review-g187323-d202459-Reviews-Radisson_Blu_Hotel_Berlin-Berlin.html"),
-            new HotelModel(2L,
+            new Hotel(2L,
                     "Regent Berlin",
                     5,
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/00/52/86/hotel-lobby.jpg?w=1200&h=-1&s=1",
@@ -174,7 +174,7 @@ public class HotelController {
                     4.5,
                     "Berlin",
                     "https://www.tripadvisor.com/Hotel_Review-g187323-d190664-Reviews-Regent_Berlin-Berlin.html"),
-            new HotelModel(3L,
+            new Hotel(3L,
                     "Hotel AMANO Grand Central",
                     3,
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/09/e8/1a/hotel-amano-grand-central.jpg?w=1200&h=-1&s=1",
@@ -183,7 +183,7 @@ public class HotelController {
                     4.0,
                     "Berlin",
                     "https://www.tripadvisor.com/Hotel_Review-g187323-d8409027-Reviews-Hotel_AMANO_Grand_Central-Berlin.html"),
-            new HotelModel(1L,
+            new Hotel(1L,
                     "Hotel City Residence",
                     3,
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0a/02/cb/a7/hotel-city-residence.jpg?w=1200&h=-1&s=1",
@@ -192,7 +192,7 @@ public class HotelController {
                     4.0,
                     "Frankfurt",
                     "https://www.tripadvisor.com/Hotel_Review-g635854-d1724878-Reviews-Hotel_City_Residence-Frankfurt_Oder_Brandenburg.html"),
-            new HotelModel(2L,
+            new Hotel(2L,
                     "Living Hotel Weissensee",
                     3,
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/94/f8/6e/double-deluxe-duplex--v15239539.jpg?w=1200&h=-1&s=1",
@@ -201,7 +201,7 @@ public class HotelController {
                     4.5,
                     "Frankfurt",
                     "https://www.tripadvisor.com/Hotel_Review-g187323-d202461-Reviews-Living_Hotel_Weissensee_by_Derag-Berlin.html"),
-            new HotelModel(3L,
+            new Hotel(3L,
                     "Seehotel Luisenhof",
                     3.5,
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/07/1d/6e/3f/seehotel-luisenhof.jpg?w=900&h=-1&s=1",
@@ -213,12 +213,12 @@ public class HotelController {
     );
 
     @GetMapping(value = "/{cityName}")
-    public List<HotelModel> getAllHotels(@PathVariable("cityName") String cityName) {
+    public List<Hotel> getAllHotels(@PathVariable("cityName") String cityName) {
         return hotels.stream().filter(hotel -> hotel.getCityName().equals(cityName)).collect(Collectors.toList());
     }
 
     @GetMapping(value = "/top-hotels")
-    public List<HotelModel> getTopHotels() {
+    public List<Hotel> getTopHotels() {
         return hotels.stream().filter(hotel -> hotel.getRating() > 4.4).collect(Collectors.toList());
     }
 }

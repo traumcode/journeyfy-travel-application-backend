@@ -1,5 +1,4 @@
-package com.journeyfy.journeyfytravelapplication.hotels;
-
+package com.journeyfy.journeyfytravelapplication.museums;
 import lombok.*;
 
 @ToString
@@ -8,14 +7,13 @@ import lombok.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class HotelModel {
+public class Museum {
     private Long id;
+    private String pictureLink;
     private String name;
-    private double hotelClass;
-    private String picture;
     private String description;
-    private double price;
     private double rating;
+    private double price;
     private String cityName;
-    private String siteAddress;
+    private String siteLink;
 }

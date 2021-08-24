@@ -1,5 +1,4 @@
-package com.journeyfy.journeyfytravelapplication.activities;
-
+package com.journeyfy.journeyfytravelapplication.hotels;
 
 import lombok.*;
 
@@ -9,13 +8,14 @@ import lombok.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class ActivityModel {
+public class Hotel {
     private Long id;
-    private String pictureLink;
     private String name;
+    private double hotelClass;
+    private String picture;
     private String description;
-    private double rating;
     private double price;
+    private double rating;
     private String cityName;
-
+    private String siteAddress;
 }

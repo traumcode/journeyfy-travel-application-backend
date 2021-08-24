@@ -1,7 +1,6 @@
 package com.journeyfy.journeyfytravelapplication.clubs;
 
 
-import com.journeyfy.journeyfytravelapplication.activities.ActivityModel;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -13,8 +12,8 @@ import java.util.stream.Collectors;
 @RequestMapping(path = "clubs", produces = "application/json")
 public class ClubController {
 
-    public static List<ClubModel> allClubs = Arrays.asList(
-            new ClubModel(1L,
+    public static List<Club> allClubs = Arrays.asList(
+            new Club(1L,
                     "Berghain",
                     " Am Wriezener Bahnhof, 10243 Berlin, Germany",
                     "Berlin",
@@ -22,7 +21,7 @@ public class ClubController {
                     "https://www.atravelthing.com/wp-content/uploads/2018/04/The-Berghain-club-in-Berlin.jpg",
                     5.0
             ),
-            new ClubModel(2L,
+            new Club(2L,
                     "Tresor",
                     "Köpenicker Str. 70, 10179 Berlin, Germany",
                     "Berlin",
@@ -30,7 +29,7 @@ public class ClubController {
                     "https://static.dw.com/image/17368811_403.jpg",
                     4.3
             ),
-            new ClubModel(3L,
+            new Club(3L,
                     "Hoppetosse",
                     "Eichenstraße 4, 12435 Berlin, Germany",
                     "Berlin",
@@ -38,7 +37,7 @@ public class ClubController {
                     "https://imgproxy.ra.co/_/quality:100/plain//images/clubs/lg/de-hoppetosse-berlin.jpg",
                     4.0
             ),
-            new ClubModel(4L,
+            new Club(4L,
                     "Jahrhunderthalle",
                     "Pfaffenwiese 301, 65929 Frankfurt am Main, Germany",
                     "Frankfurt",
@@ -46,7 +45,7 @@ public class ClubController {
                     "https://www.jahrhunderthalle.de/media/668306/_dsc7902_kleiner.jpg",
                     3.6
             ),
-            new ClubModel(5L,
+            new Club(5L,
                     "Musiklokal Südbahnhof",
                     "Hedderichstraße 51, 60594 Frankfurt am Main, Germany",
                     "Frankfurt",
@@ -54,7 +53,7 @@ public class ClubController {
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/95/cb/eb/musiklokal-sudbahnhof.jpg?w=120",
                     4.0
             ),
-            new ClubModel(6L,
+            new Club(6L,
                     "Nacht Leben",
                     "Kurt-Schumacher-Straße 45, 60313 Frankfurt am Main, Germany",
                     "Frankfurt",
@@ -62,7 +61,7 @@ public class ClubController {
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/ac/97/23/nachtleben.jpg?w=1200&h=-1&s=1",
                     4.0
             ),
-            new ClubModel(7L,
+            new Club(7L,
                     "Moog",
                     "Carrer de l'Arc del Teatre, 3, 08002 Barcelona, Spain",
                     "Barcelona",
@@ -70,7 +69,7 @@ public class ClubController {
                     "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/6a/3f/68/photo0jpg.jpg?w=1100&h=-1&s=1",
                     3.5
             ),
-            new ClubModel(8L,
+            new Club(8L,
                     "The Warehouse",
                     "secret",
                     "Barcelona",
@@ -78,7 +77,7 @@ public class ClubController {
                     "https://sonar.es/system/attached_images/7058/medium/showcase-the-warehouse.jpg?1464693257",
                     3.5
             ),
-            new ClubModel(9L,
+            new Club(9L,
                     "Mya Club",
                     "Av. del Professor López Piñero, 5, 46013 València, Valencia, Spain",
                     "Valencia",
@@ -86,7 +85,7 @@ public class ClubController {
                     "https://www.lynxproaudio.com/www/home/lx-resources/uploads/2018/05/Slider-MYA2-1080x675.jpg",
                     4.6
             ),
-            new ClubModel(10L,
+            new Club(10L,
                     "Raspoutin Paris",
                     "58 Rue de Bassano, 75008 Paris, France",
                     "Paris",
@@ -94,7 +93,7 @@ public class ClubController {
                     "https://raspoutine.com/wp-content/uploads/2015/03/Raspoutine-Paris01e-2000x1000.jpg",
                     3.6
             ),
-            new ClubModel(11L,
+            new Club(11L,
                     "L'Arc Paris",
                     "12 Rue de Presbourg, 75116 Paris, France",
                     "Paris",
@@ -102,7 +101,7 @@ public class ClubController {
                     "https://clubbable.blob.core.windows.net/medias/L'Arc-Paris-1",
                     4.3
             ),
-            new ClubModel(12L,
+            new Club(12L,
                     "Terminal",
                     "3 Rue Terme, 69001 Lyon, France",
                     "Lyon",
@@ -110,7 +109,7 @@ public class ClubController {
                     "https://scontent.fotp3-3.fna.fbcdn.net/v/t1.6435-9/159744730_1855334857962481_2165560740453939570_n.jpg?_nc_cat=101&ccb=1-4&_nc_sid=730e14&_nc_ohc=z1qmE57ZHfEAX8b6TmL&_nc_ht=scontent.fotp3-3.fna&oh=94c903dbbb1fb5de75df9f7f268c07ee&oe=61374984",
                     4.6
             ),
-            new ClubModel(13L,
+            new Club(13L,
                     "Axar",
                     "52 Quai Rambaud, 69002 Lyon, France",
                     "Lyon",
@@ -121,18 +120,18 @@ public class ClubController {
     );
 
     @GetMapping(value = "/{cityName}")
-    public List<ClubModel> getAllClubsByCityName(@PathVariable("cityName") String cityName) {
+    public List<Club> getAllClubsByCityName(@PathVariable("cityName") String cityName) {
         return allClubs.stream().filter(club -> club.getCityName().equals(cityName)).collect(Collectors.toList());
     }
 
     @GetMapping(value = "/all-clubs")
-    public List<ClubModel
+    public List<Club
             > getAllActivitiesByCityName(){
         return allClubs;
     }
 
     @GetMapping(value = "/top-clubs")
-    public List<ClubModel> getTopMuseums(){
+    public List<Club> getTopMuseums(){
         return allClubs.stream().filter(club -> club.getRating()> 4.4).collect(Collectors.toList());
     }
 }

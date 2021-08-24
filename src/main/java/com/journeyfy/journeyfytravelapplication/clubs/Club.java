@@ -8,7 +8,7 @@ import lombok.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClubModel {
+public class Club {
     private Long id;
     private String name;
     private String address;
