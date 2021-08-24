@@ -224,5 +224,10 @@ public class HotelController {
     public List<Hotel> getTopHotels() {
         return hotelRepository.getHotelsByRatingGreaterThan(4d);
     }
+
+    @PostMapping("/add-hotel")
+    public void addHotel(@RequestBody Hotel hotel) {
+        hotelRepository.save(hotel);
+    }
 }
 
