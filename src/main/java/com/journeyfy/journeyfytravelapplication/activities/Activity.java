@@ -23,6 +23,7 @@ public class Activity {
     private Long id;
     private String pictureLink;
     private String name;
+    @Column(length = 10000)
     private String description;
     private double rating;
     private double price;

@@ -23,6 +23,7 @@ public class Hotel {
     private String name;
     private double hotelClass;
     private String picture;
+    @Column(length = 10000)
     private String description;
     private double price;
     private double rating;
