@@ -1,7 +1,6 @@
 package com.journeyfy.journeyfytravelapplication.clubs;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.journeyfy.journeyfytravelapplication.posts.Post;
 import com.journeyfy.journeyfytravelapplication.wishes.Wish;
 import lombok.*;
@@ -23,14 +22,23 @@ public class Club {
     private String name;
     private String address;
     private String cityName;
+    @Column(length = 60000)
     private String description;
     private String pictureLink;
     private double rating;
     @OneToMany(mappedBy = "club", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonIgnore
     private List<Post> posts;
-    @ManyToOne
-    @JoinColumn(name = "wish_id")
-    @JsonBackReference
-    private Wish wish;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "club")
+    @JsonIgnore
+    private List<Wish> wish;
+
+    public Club(String name, String address, String cityName, String description, String pictureLink, double rating) {
+        this.name = name;
+        this.address = address;
+        this.cityName = cityName;
+        this.description = description;
+        this.pictureLink = pictureLink;
+        this.rating = rating;
+    }
 }

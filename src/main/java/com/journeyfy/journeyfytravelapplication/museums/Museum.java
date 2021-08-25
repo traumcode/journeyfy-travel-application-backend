@@ -1,6 +1,5 @@
 package com.journeyfy.journeyfytravelapplication.museums;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.journeyfy.journeyfytravelapplication.posts.Post;
 import com.journeyfy.journeyfytravelapplication.wishes.Wish;
 import lombok.*;
@@ -28,10 +27,20 @@ public class Museum {
     private String cityName;
     private String siteLink;
     @OneToMany(mappedBy = "museum", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonIgnore
     private List<Post> posts;
-    @ManyToOne
-    @JoinColumn(name = "wish_id")
-    @JsonBackReference
-    private Wish wish;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "museum")
+    @JsonIgnore
+    private List<Wish> wish;
+
+    public Museum(String pictureLink, String name, String description, double rating, double price, String cityName, String siteLink) {
+        this.pictureLink = pictureLink;
+        this.name = name;
+        this.description = description;
+        this.rating = rating;
+        this.price = price;
+        this.cityName = cityName;
+        this.siteLink = siteLink;
+    }
 }

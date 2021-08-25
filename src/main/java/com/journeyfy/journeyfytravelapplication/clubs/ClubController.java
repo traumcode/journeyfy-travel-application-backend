@@ -29,4 +29,9 @@ public class ClubController {
     public List<Club> getTopMuseums(){
         return clubRepository.getClubsByRatingGreaterThan(4d);
     }
+
+    @PostMapping(value = "/add-club")
+    public void addClub(@RequestBody Club club) {
+        clubRepository.save(club);
+    }
 }

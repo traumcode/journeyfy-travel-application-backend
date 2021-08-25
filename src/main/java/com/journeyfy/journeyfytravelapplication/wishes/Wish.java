@@ -1,7 +1,6 @@
 package com.journeyfy.journeyfytravelapplication.wishes;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.journeyfy.journeyfytravelapplication.activities.Activity;
@@ -16,6 +15,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 
 @AllArgsConstructor
@@ -29,21 +29,28 @@ public class Wish {
     @SequenceGenerator(name = "wish_sequence", sequenceName = "wish_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "wish_sequence")
     private Long id;
-    private String name;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference
-    private User user;
-    @OneToMany(mappedBy = "wish")
-    @JsonManagedReference
-    private List<Activity> activities;
-    @OneToMany(mappedBy = "wish")
-    @JsonManagedReference
-    private List<Club> clubs;
     @JsonIgnore
-    @OneToMany()
-    private List<Hotel> hotels;
-    @OneToMany(mappedBy = "wish")
-    @JsonManagedReference
-    private List<Museum> museums;
+    private User user;
+
+    @ManyToOne()
+    @JoinColumn(name = "activity_id")
+    @JsonIgnore
+    private Activity activity;
+
+    @ManyToOne()
+    @JoinColumn(name = "club_id")
+    @JsonIgnore
+    private Club club;
+
+    @ManyToOne()
+    @JoinColumn(name = "hotel_id")
+    @JsonIgnore
+    private Hotel hotel;
+
+    @ManyToOne()
+    @JoinColumn(name = "museum_id")
+    @JsonIgnore
+    private Museum museum;
 }
