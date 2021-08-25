@@ -9,4 +9,5 @@ public interface MuseumRepository extends JpaRepository<Museum, Long> {
     List<Museum> getMuseumsByCityName(String cityName);
     List<Museum> getMuseumsByRatingGreaterThan(double rating);
     Museum findByName(String name);
+
 }
