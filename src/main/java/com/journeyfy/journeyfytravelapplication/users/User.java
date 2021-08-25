@@ -1,10 +1,7 @@
 package com.journeyfy.journeyfytravelapplication.users;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.journeyfy.journeyfytravelapplication.posts.Post;
 import com.journeyfy.journeyfytravelapplication.wishes.Wish;
 import lombok.AllArgsConstructor;
