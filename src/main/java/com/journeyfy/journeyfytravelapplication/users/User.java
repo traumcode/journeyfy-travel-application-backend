@@ -2,6 +2,7 @@ package com.journeyfy.journeyfytravelapplication.users;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.journeyfy.journeyfytravelapplication.enums.Gender;
 import com.journeyfy.journeyfytravelapplication.posts.Post;
 import com.journeyfy.journeyfytravelapplication.wishes.Wish;
 import lombok.AllArgsConstructor;
@@ -27,8 +28,9 @@ public class User {
     private String userName;
     private String email;
     private String password;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-
     private List<Post> posts;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 

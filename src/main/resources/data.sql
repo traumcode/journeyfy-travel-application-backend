@@ -1,16 +1,9 @@
-INSERT INTO "user"(id, user_name, email, password)
-VALUES (1, 'traumcode', 'silviubocsa@gmail.com', 'parola123');
-INSERT INTO "user"(id, user_name, email, password)
-VALUES (2, 'pisicoder', 'siminatabac@gmail.com', 'parola123');
-INSERT INTO "user"(id, user_name, email, password)
-VALUES (3, 'floaredemai', 'mateiflorentina@gmail.com', 'parola123');
-
-INSERT INTO "user"(id, user_name, email, password)
-VALUES (1, 'traumcode', 'silviubocsa@gmail.com', 'parola123');
-INSERT INTO "user"(id, user_name, email, password)
-VALUES (2, 'pisicoder', 'siminatabac@gmail.com', 'parola123');
-INSERT INTO "user"(id, user_name, email, password)
-VALUES (3, 'floaredemai', 'mateiflorentina@gmail.com', 'parola123');
+INSERT INTO "user"(id, user_name, email, password, gender)
+VALUES (1, 'traumcode', 'silviubocsa@gmail.com', 'parola123', 'male');
+INSERT INTO "user"(id, user_name, email, password, gender)
+VALUES (2, 'pisicoder', 'siminatabac@gmail.com', 'parola123', 'female');
+INSERT INTO "user"(id, user_name, email, password, gender)
+VALUES (3, 'floaredemai', 'mateiflorentina@gmail.com', 'parola123', 'female');
 
 INSERT INTO entity(type, id, name, address, city_name, description, picture_link, rating, price, hotel_class, site_link, activity_type)
 VALUES ('museum', 1,

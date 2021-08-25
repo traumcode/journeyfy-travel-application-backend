@@ -22,6 +22,11 @@ public class UserController {
         return userRepository.findAll();
     }
 
+    @GetMapping(path = "/{id}")
+    public User getUserById(@PathVariable(value = "id") Long id) {
+        return userRepository.getById(id);
+    }
+
     @PostMapping(path = "/add-user")
     public void addUser(@RequestBody User user){
         userRepository.save(user);
