@@ -1,6 +1,8 @@
 package com.journeyfy.journeyfytravelapplication.wishes;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.journeyfy.journeyfytravelapplication.activities.Activity;
 import com.journeyfy.journeyfytravelapplication.clubs.Club;
@@ -38,8 +40,8 @@ public class Wish {
     @OneToMany(mappedBy = "wish")
     @JsonManagedReference
     private List<Club> clubs;
-    @OneToMany(mappedBy = "wish")
-    @JsonManagedReference
+    @JsonIgnore
+    @OneToMany()
     private List<Hotel> hotels;
     @OneToMany(mappedBy = "wish")
     @JsonManagedReference

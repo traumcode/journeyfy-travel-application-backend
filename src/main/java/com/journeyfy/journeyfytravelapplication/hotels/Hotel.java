@@ -1,6 +1,7 @@
 package com.journeyfy.journeyfytravelapplication.hotels;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.journeyfy.journeyfytravelapplication.posts.Post;
 import com.journeyfy.journeyfytravelapplication.wishes.Wish;
@@ -29,12 +30,21 @@ public class Hotel {
     private double rating;
     private String cityName;
     private String siteAddress;
-    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<Post> posts;
-    @ManyToOne
-    @JoinColumn(name = "wish_id")
-    @JsonBackReference
+    @JsonIgnore
+    @ManyToOne()
     private Wish wish;
+
+    public Hotel(String name, double hotelClass, String picture, String description, double price, double rating, String cityName, String siteAddress) {
+        this.name = name;
+        this.hotelClass = hotelClass;
+        this.picture = picture;
+        this.description = description;
+        this.price = price;
+        this.rating = rating;
+        this.cityName = cityName;
+        this.siteAddress = siteAddress;
+    }
+
+
 
 }
