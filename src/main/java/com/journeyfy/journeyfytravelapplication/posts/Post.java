@@ -40,19 +40,19 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name = "activity_id")
-    @JsonBackReference
+
     private Activity activity;
     @ManyToOne
     @JoinColumn(name = "hotel_id")
-    @JsonIgnore
+
     private Hotel hotel;
     @ManyToOne
     @JoinColumn(name = "museum_id")
-    @JsonIgnore
+
     private Museum museum;
     @ManyToOne
     @JoinColumn(name = "club_id")
-    @JsonIgnore
+
     private Club club;
 
 }

@@ -36,21 +36,21 @@ public class Wish {
 
     @ManyToOne()
     @JoinColumn(name = "activity_id")
-    @JsonIgnore
+
     private Activity activity;
 
     @ManyToOne()
     @JoinColumn(name = "club_id")
-    @JsonIgnore
+
     private Club club;
 
     @ManyToOne()
     @JoinColumn(name = "hotel_id")
-    @JsonIgnore
+
     private Hotel hotel;
 
     @ManyToOne()
     @JoinColumn(name = "museum_id")
-    @JsonIgnore
+
     private Museum museum;
 }
