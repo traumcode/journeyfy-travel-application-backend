@@ -2,6 +2,7 @@ package com.journeyfy.journeyfytravelapplication.museums;
 
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -23,5 +24,10 @@ public class MuseumController {
     @GetMapping(value = "/top-museums")
     public List<Museum> getTopMuseums(){
         return museumRepository.getMuseumsByRatingGreaterThan(4d);
+    }
+
+    @PostMapping(path = "/add")
+    public void addMuseum(@RequestBody Museum museum){
+        museumRepository.save(museum);
     }
 }

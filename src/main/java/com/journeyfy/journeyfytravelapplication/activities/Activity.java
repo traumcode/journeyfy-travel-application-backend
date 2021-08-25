@@ -2,6 +2,7 @@ package com.journeyfy.journeyfytravelapplication.activities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.journeyfy.journeyfytravelapplication.posts.Post;
 import com.journeyfy.journeyfytravelapplication.wishes.Wish;
@@ -29,10 +30,10 @@ public class Activity {
     private double price;
     private String cityName;
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonIgnore
     private List<Post> posts;
-    @ManyToOne
-    @JoinColumn(name = "wish_id")
-    @JsonBackReference
-    private Wish wish;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "activity")
+    @JsonIgnore
+    private List<Wish> wish;
 }

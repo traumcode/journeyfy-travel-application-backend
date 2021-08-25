@@ -1,6 +1,7 @@
 package com.journeyfy.journeyfytravelapplication.posts;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.journeyfy.journeyfytravelapplication.activities.Activity;
 import com.journeyfy.journeyfytravelapplication.clubs.Club;
 import com.journeyfy.journeyfytravelapplication.enums.ActivityType;
@@ -43,15 +44,15 @@ public class Post {
     private Activity activity;
     @ManyToOne
     @JoinColumn(name = "hotel_id")
-    @JsonBackReference
+    @JsonIgnore
     private Hotel hotel;
     @ManyToOne
     @JoinColumn(name = "museum_id")
-    @JsonBackReference
+    @JsonIgnore
     private Museum museum;
     @ManyToOne
     @JoinColumn(name = "club_id")
-    @JsonBackReference
+    @JsonIgnore
     private Club club;
 
 }

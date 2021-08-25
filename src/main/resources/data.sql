@@ -1,10 +1,6 @@
-INSERT INTO users(id, user_name, email, password) VALUES(1, 'traumcode', 'silviubocsa@gmail.com', 'parola123');
-INSERT INTO users(id, user_name, email, password) VALUES(2, 'pisicoder', 'siminatabac@gmail.com', 'parola123');
-INSERT INTO users(id, user_name, email, password) VALUES(3, 'floaredemai', 'mateiflorentina@gmail.com', 'parola123');
-
-INSERT INTO wish(id, name, user_id) VALUES(1, 'Berlin', 1);
-INSERT INTO wish(id, name, user_id) VALUES(2, 'Paris', 2);
-INSERT INTO wish(id, name, user_id) VALUES(3, 'Valencia', 3);
+INSERT INTO "user"(id, user_name, email, password) VALUES(1, 'traumcode', 'silviubocsa@gmail.com', 'parola123');
+INSERT INTO "user"(id, user_name, email, password) VALUES(2, 'pisicoder', 'siminatabac@gmail.com', 'parola123');
+INSERT INTO "user"(id, user_name, email, password) VALUES(3, 'floaredemai', 'mateiflorentina@gmail.com', 'parola123');
 
 INSERT INTO museum(id, picture_link, name, description, rating, price, city_name, site_link) VALUES(1, 'https://images.unsplash.com/photo-1530110441069-16166bc75658?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1055&q=80', 'Ciudad de las Artes y las Ciencias', 'DISCOVER THE CIUTAT DE LES ARTS I LES CIÈNCIES. Science, nature and art in a complex devoted to scientific and cultural dissemination in Europe, placed in Valencia. The City of Arts and Sciences in Valencia is a unique complex devoted to scientific and cultural dissemination which is made up of five main elements: the Hemisfèric (IMAX cinema and digital projections), the Umbracle (a landscaped vantage point and car park), the Príncipe Felipe Science Museum (an innovative centre of interactive science), the Oceanográfico (the largest aquarium in Europe with over 500 marine species) and the Palau de les Arts Reina Sofía (which takes care of the operatic programme). The Ágora gives the complex a multifunctional space.', 4.5, 65, 'Valencia', 'https://www.cac.es/es/home.html');
 
@@ -381,3 +377,15 @@ INTO club(id, name, address, city_name, description, picture_link, rating)
 VALUES (13, 'Axar', '52 Quai Rambaud, 69002 Lyon, France', 'Lyon',
         'No description.',
         'https://www.lynxproaudio.com/www/home/lx-resources/uploads/2018/05/Slider-MYA2-1080x675.jpg', 5);
+
+INSERT INTO wish(id, activity_id, club_id, hotel_id, museum_id, user_id) VALUES(1, 2, null, null, null, 1);
+INSERT INTO wish(id, activity_id, club_id, hotel_id, museum_id, user_id) VALUES(2, null, 4, null, null, 2);
+INSERT INTO wish(id, activity_id, club_id, hotel_id, museum_id, user_id) VALUES(3, null, null, 4, null, 3);
+
+
+INSERT INTO post(id, activity_type, likes, posted_at, rating, text, title, activity_id, club_id, hotel_id, museum_id, user_id)
+VALUES(1, 'HOTEL', 0, NOW(), 4.5, 'splendid', 'o vacanta reusita', null, null, 4, null, 1);
+INSERT INTO post(id, activity_type, likes, posted_at, rating, text, title, activity_id, club_id, hotel_id, museum_id, user_id)
+VALUES(2, 'CLUB', 0, NOW(), 4.5, 'splendid', 'o vacanta reusita', null, 3, null, null, 2);
+INSERT INTO post(id, activity_type, likes, posted_at, rating, text, title, activity_id, club_id, hotel_id, museum_id, user_id)
+VALUES(3, 'MUSEUM', 0, NOW(), 4.5, 'splendid', 'o vacanta reusita', null, null, null, 2, 3);
