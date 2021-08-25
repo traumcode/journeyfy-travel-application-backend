@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.journeyfy.journeyfytravelapplication.posts.Post;
 import com.journeyfy.journeyfytravelapplication.wishes.Wish;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "hotel")
 @Entity
+@DynamicUpdate
 public class Hotel {
     @Id
     @SequenceGenerator(name = "hotel_sequence", sequenceName = "hotel_sequence", allocationSize = 1)
@@ -50,7 +52,4 @@ public class Hotel {
         this.cityName = cityName;
         this.siteAddress = siteAddress;
     }
-
-
-
 }

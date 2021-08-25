@@ -7,4 +7,5 @@ import java.util.List;
 public interface HotelRepository extends JpaRepository<Hotel, Long> {
     List<Hotel> getHotelsByCityName(String cityName);
     List<Hotel> getHotelsByRatingGreaterThan(double rating);
+    Hotel findByName(String name);
 }
