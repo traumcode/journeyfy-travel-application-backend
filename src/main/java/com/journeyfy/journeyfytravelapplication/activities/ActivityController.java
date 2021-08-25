@@ -1,6 +1,7 @@
 package com.journeyfy.journeyfytravelapplication.activities;
 
 
+import com.journeyfy.journeyfytravelapplication.enums.ActivityType;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,17 +16,17 @@ public class ActivityController {
 
     @GetMapping(value = "/{cityName}")
     public List<Activity> getAllActivitiesByCityName(@PathVariable("cityName") String cityName){
-        return activityRepository.getActivitiesByCityName(cityName);
+        return activityRepository.getActivitiesByCityNameAndActivityType(cityName, ActivityType.ACTIVITY);
     }
 
     @GetMapping(value = "/all-activities")
-    public List<Activity> getAllActivitiesByCityName(){
-        return activityRepository.findAll();
+    public List<Activity> getAllActivities(){
+        return activityRepository.getActivitiesByActivityType(ActivityType.ACTIVITY);
     }
 
     @GetMapping(value = "/top-activities")
     public List<Activity> getTopMuseums(){
-        return activityRepository.getActivitiesByRatingGreaterThan(4d);
+        return activityRepository.getActivitiesByActivityTypeAndRatingGreaterThan(ActivityType.ACTIVITY, 4d);
     }
 
 

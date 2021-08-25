@@ -1,5 +1,6 @@
 package com.journeyfy.journeyfytravelapplication.hotels;
 
+import com.journeyfy.journeyfytravelapplication.enums.ActivityType;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -14,14 +15,19 @@ import java.util.NoSuchElementException;
 public class HotelController {
     private final HotelRepository hotelRepository;
 
+    @GetMapping(value = "/all-hotels")
+    public List<Hotel> getAllHotels(){
+        return hotelRepository.getHotelsByActivityType(ActivityType.HOTEL);
+    }
+
     @GetMapping(value = "/{cityName}")
-    public List<Hotel> getAllHotels(@PathVariable("cityName") String cityName) {
-        return hotelRepository.getHotelsByCityName(cityName);
+    public List<Hotel> getAllHotelsByCityName(@PathVariable("cityName") String cityName) {
+        return hotelRepository.getHotelsByCityNameAndActivityType(cityName, ActivityType.HOTEL);
     }
 
     @GetMapping(value = "/top-hotels")
     public List<Hotel> getTopHotels() {
-        return hotelRepository.getHotelsByRatingGreaterThan(4d);
+        return hotelRepository.getHotelsByActivityTypeAndRatingGreaterThan(ActivityType.HOTEL, 4d);
     }
 
     @PostMapping("/add-hotel")
@@ -29,19 +35,7 @@ public class HotelController {
         hotelRepository.save(hotel);
     }
 
-    @PutMapping("/{id}/edit-hotel")
-    public void editHotel(@RequestBody Hotel hotel, @PathVariable Long id) {
-        Hotel hotel1 = hotelRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Couldn't find that show id " + id));
-        hotel1.setName(hotel.getName());
-        hotel1.setHotelClass(hotel.getHotelClass());
-        hotel1.setCityName(hotel.getCityName());
-        hotel1.setDescription(hotel.getDescription());
-        hotel1.setPicture(hotel.getPicture());
-        hotel1.setPrice(hotel.getPrice());
-        hotel1.setRating(hotel.getRating());
-        hotel1.setSiteAddress(hotel.getSiteAddress());
-        hotelRepository.save(hotel1);
-    }
+
 
 }
 

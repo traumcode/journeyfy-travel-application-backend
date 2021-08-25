@@ -1,6 +1,7 @@
 package com.journeyfy.journeyfytravelapplication.museums;
 
 
+import com.journeyfy.journeyfytravelapplication.enums.ActivityType;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,18 +22,18 @@ public class MuseumController {
 
     @GetMapping(value= "/{cityName}")
     public List<Museum> getAllMuseums(@PathVariable("cityName") String cityName){
-        return museumRepository.getMuseumsByCityName(cityName);
+        return museumRepository.getMuseumsByCityNameAndActivityType(cityName, ActivityType.MUSEUM);
     }
 
     @GetMapping(value = "/top-museums")
     public List<Museum> getTopMuseums(){
-        return museumRepository.getMuseumsByRatingGreaterThan(4d);
+        return museumRepository.getMuseumsByActivityTypeAndRatingGreaterThan(ActivityType.MUSEUM, 4d);
     }
 
     @PostMapping(path = "/add")
     public void addMuseum(@RequestBody Museum museum){
-        System.out.println(museumRepository.findByName(museum.getName()));
-        if(museumRepository.findByName(museum.getName()) != null){
+        System.out.println(museumRepository.findByNameAndActivityType(museum.getName(), ActivityType.MUSEUM));
+        if(museumRepository.findByNameAndActivityType(museum.getName(), ActivityType.MUSEUM) != null){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "This hotel name already exist in database");
         }else{
             museumRepository.save(museum);
@@ -48,7 +49,7 @@ public class MuseumController {
     public void editMuseumById(@PathVariable("id") Long id, @RequestBody Museum museum){
         Optional<Museum> foundedMuseum = museumRepository.findById(id);
         if(foundedMuseum.isPresent()){
-            if(museumRepository.findByName(museum.getName()) != null){
+            if(museumRepository.findByNameAndActivityType(museum.getName(), ActivityType.MUSEUM) != null){
                 foundedMuseum.get().setPictureLink(museum.getPictureLink());
                 foundedMuseum.get().setName(museum.getName());
                 foundedMuseum.get().setDescription(museum.getDescription());

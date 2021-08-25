@@ -1,6 +1,7 @@
 package com.journeyfy.journeyfytravelapplication.clubs;
 
 
+import com.journeyfy.journeyfytravelapplication.enums.ActivityType;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,21 +18,17 @@ public class ClubController {
 
     @GetMapping(value = "/{cityName}")
     public List<Club> getAllClubsByCityName(@PathVariable("cityName") String cityName) {
-        return clubRepository.getClubsByCityName(cityName);
+        return clubRepository.getClubsByCityNameAndActivityType(cityName, ActivityType.CLUB);
     }
 
     @GetMapping(value = "/all-clubs")
-    public List<Club> getAllActivitiesByCityName(){
-        return clubRepository.findAll();
+    public List<Club> getAllClubs(){
+        return clubRepository.getClubsByActivityType(ActivityType.CLUB);
     }
 
     @GetMapping(value = "/top-clubs")
-    public List<Club> getTopMuseums(){
-        return clubRepository.getClubsByRatingGreaterThan(4d);
+    public List<Club> getTopClubs(){
+        return clubRepository.getClubsByActivityTypeAndRatingGreaterThan(ActivityType.CLUB, 4d);
     }
 
-    @PostMapping(value = "/add-club")
-    public void addClub(@RequestBody Club club) {
-        clubRepository.save(club);
-    }
 }

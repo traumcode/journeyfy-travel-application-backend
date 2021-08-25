@@ -1,56 +1,20 @@
 package com.journeyfy.journeyfytravelapplication.hotels;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.journeyfy.journeyfytravelapplication.posts.Post;
-import com.journeyfy.journeyfytravelapplication.wishes.Wish;
+import com.journeyfy.journeyfytravelapplication.activityentity.Entity;
+import com.journeyfy.journeyfytravelapplication.enums.ActivityType;
 import lombok.*;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.DiscriminatorValue;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "hotel")
-@Entity
-public class Hotel {
-    @Id
-    @SequenceGenerator(name = "hotel_sequence", sequenceName = "hotel_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hotel_sequence")
-    private Long id;
-    private String name;
-    private double hotelClass;
-    private String picture;
-    @Column(length = 10000)
-    private String description;
-    private double price;
-    private double rating;
-    private String cityName;
-    private String siteAddress;
-    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Post> posts;
+@javax.persistence.Entity
+@DiscriminatorValue("hotel")
+public class Hotel extends Entity {
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hotel")
-    @JsonIgnore
-    private List<Wish> wish;
-
-
-    public Hotel(String name, double hotelClass, String picture, String description, double price, double rating, String cityName, String siteAddress) {
-        this.name = name;
-        this.hotelClass = hotelClass;
-        this.picture = picture;
-        this.description = description;
-        this.price = price;
-        this.rating = rating;
-        this.cityName = cityName;
-        this.siteAddress = siteAddress;
+    public Hotel(String pictureLink, String description, double rating, double price, String cityName, String name, String siteLink, String address, ActivityType activityType) {
+        super(pictureLink, description, rating, price, cityName, name, siteLink, address, ActivityType.HOTEL);
     }
-
-
-
 }
