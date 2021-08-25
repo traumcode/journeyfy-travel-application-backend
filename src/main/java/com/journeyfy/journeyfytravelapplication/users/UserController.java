@@ -2,9 +2,12 @@ package com.journeyfy.journeyfytravelapplication.users;
 
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/user")
@@ -24,7 +27,7 @@ public class UserController {
 
     @GetMapping(path = "/{id}")
     public User getUserById(@PathVariable(value = "id") Long id) {
-        return userRepository.getById(id);
+       return userRepository.findById(id).get();
     }
 
     @PostMapping(path = "/add-user")
