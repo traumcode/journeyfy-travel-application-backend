@@ -1,46 +1,18 @@
 package com.journeyfy.journeyfytravelapplication.museums;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.journeyfy.journeyfytravelapplication.posts.Post;
-import com.journeyfy.journeyfytravelapplication.wishes.Wish;
+import com.journeyfy.journeyfytravelapplication.activityentity.Entity;
+import com.journeyfy.journeyfytravelapplication.enums.ActivityType;
 import lombok.*;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.DiscriminatorValue;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "museum")
-@Entity
-public class Museum {
-    @Id
-    @SequenceGenerator(name = "museum_sequence", sequenceName = "museum_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "museum_sequence")
-    private Long id;
-    private String pictureLink;
-    private String name;
-    @Column(length = 10000)
-    private String description;
-    private double rating;
-    private double price;
-    private String cityName;
-    private String siteLink;
-    @OneToMany(mappedBy = "museum", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Post> posts;
+@javax.persistence.Entity
+@DiscriminatorValue("museum")
+public class Museum extends Entity {
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "museum")
-    @JsonIgnore
-    private List<Wish> wish;
-
-    public Museum(String pictureLink, String name, String description, double rating, double price, String cityName, String siteLink) {
-        this.pictureLink = pictureLink;
-        this.name = name;
-        this.description = description;
-        this.rating = rating;
-        this.price = price;
-        this.cityName = cityName;
-        this.siteLink = siteLink;
+    public Museum(String pictureLink, String description, double rating, double price, String cityName, String name, String siteLink, String address, ActivityType activityType) {
+        super(pictureLink, description, rating, price, cityName, name, siteLink, address, ActivityType.MUSEUM);
     }
 }

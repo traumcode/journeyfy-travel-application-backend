@@ -1,12 +1,8 @@
 package com.journeyfy.journeyfytravelapplication.posts;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.journeyfy.journeyfytravelapplication.activities.Activity;
-import com.journeyfy.journeyfytravelapplication.clubs.Club;
+import com.journeyfy.journeyfytravelapplication.activityentity.Entity;
 import com.journeyfy.journeyfytravelapplication.enums.ActivityType;
-import com.journeyfy.journeyfytravelapplication.hotels.Hotel;
-import com.journeyfy.journeyfytravelapplication.museums.Museum;
 import com.journeyfy.journeyfytravelapplication.users.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
+@javax.persistence.Entity
 @Table(name = "post")
 public class Post {
     @Id
@@ -39,20 +35,7 @@ public class Post {
     private ActivityType activityType;
 
     @ManyToOne
-    @JoinColumn(name = "activity_id")
-
-    private Activity activity;
-    @ManyToOne
-    @JoinColumn(name = "hotel_id")
-
-    private Hotel hotel;
-    @ManyToOne
-    @JoinColumn(name = "museum_id")
-
-    private Museum museum;
-    @ManyToOne
-    @JoinColumn(name = "club_id")
-
-    private Club club;
+    @JoinColumn(name = "entity_id")
+    private Entity entity;
 
 }
