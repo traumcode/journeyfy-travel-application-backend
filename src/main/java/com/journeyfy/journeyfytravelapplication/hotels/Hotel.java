@@ -1,6 +1,9 @@
 package com.journeyfy.journeyfytravelapplication.hotels;
 
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.journeyfy.journeyfytravelapplication.posts.Post;
 import com.journeyfy.journeyfytravelapplication.wishes.Wish;
 import lombok.*;
@@ -35,5 +38,19 @@ public class Hotel {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "hotel")
     @JsonIgnore
     private List<Wish> wish;
+
+
+    public Hotel(String name, double hotelClass, String picture, String description, double price, double rating, String cityName, String siteAddress) {
+        this.name = name;
+        this.hotelClass = hotelClass;
+        this.picture = picture;
+        this.description = description;
+        this.price = price;
+        this.rating = rating;
+        this.cityName = cityName;
+        this.siteAddress = siteAddress;
+    }
+
+
 
 }
