@@ -1,6 +1,8 @@
 package com.journeyfy.journeyfytravelapplication.activityentity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.journeyfy.journeyfytravelapplication.enums.ActivityType;
 import com.journeyfy.journeyfytravelapplication.posts.Post;
 import com.journeyfy.journeyfytravelapplication.wishes.Wish;
@@ -17,7 +19,7 @@ import java.util.List;
 @Setter
 @DiscriminatorColumn(name="type",
         discriminatorType = DiscriminatorType.STRING)
-@ToString
+@EqualsAndHashCode
 public abstract class Entity {
     @Id
     @SequenceGenerator(name = "activity_entity_sequence", sequenceName = "activity_entity_sequence", allocationSize = 1)

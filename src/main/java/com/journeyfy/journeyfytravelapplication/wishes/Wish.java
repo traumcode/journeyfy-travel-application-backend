@@ -1,6 +1,8 @@
 package com.journeyfy.journeyfytravelapplication.wishes;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.journeyfy.journeyfytravelapplication.activityentity.Entity;
 import com.journeyfy.journeyfytravelapplication.users.User;
 import lombok.*;
@@ -14,7 +16,7 @@ import javax.persistence.*;
 @Setter
 @javax.persistence.Entity
 @Table(name = "wish")
-@ToString
+@EqualsAndHashCode
 public class Wish {
     @Id
     @SequenceGenerator(name = "wish_sequence", sequenceName = "wish_sequence", allocationSize = 1)
@@ -25,7 +27,6 @@ public class Wish {
     @JsonIgnore
     private User user;
     private String name;
-
     @ManyToOne()
     @JoinColumn(name = "activity_entity_id")
     private Entity entity;
