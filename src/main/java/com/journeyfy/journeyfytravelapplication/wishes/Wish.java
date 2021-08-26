@@ -3,10 +3,7 @@ package com.journeyfy.journeyfytravelapplication.wishes;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.journeyfy.journeyfytravelapplication.activityentity.Entity;
 import com.journeyfy.journeyfytravelapplication.users.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -17,6 +14,7 @@ import javax.persistence.*;
 @Setter
 @javax.persistence.Entity
 @Table(name = "wish")
+@ToString
 public class Wish {
     @Id
     @SequenceGenerator(name = "wish_sequence", sequenceName = "wish_sequence", allocationSize = 1)

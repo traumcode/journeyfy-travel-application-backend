@@ -12,6 +12,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/user")
 @AllArgsConstructor
+@CrossOrigin
 public class UserController {
     private final UserRepository userRepository;
 
@@ -29,6 +30,18 @@ public class UserController {
     public User getUserById(@PathVariable(value = "id") Long id) {
        return userRepository.findById(id).get();
     }
+
+
+    @PostMapping(path="/login")
+    public User findUser(@RequestBody User user) {
+        System.out.println(user.getUserName());
+        System.out.println(user.getPassword());
+        if(userRepository.getUserByUserNameAndPassword(user.getUserName(), user.getPassword()) == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return userRepository.getUserByUserNameAndPassword(user.getUserName(), user.getPassword());
+    }
+
 
     @PostMapping(path = "/add-user")
     public void addUser(@RequestBody User user){

@@ -3,33 +3,33 @@ package com.journeyfy.journeyfytravelapplication.wishes;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.journeyfy.journeyfytravelapplication.activities.Activity;
+import com.journeyfy.journeyfytravelapplication.activityentity.Entity;
 import com.journeyfy.journeyfytravelapplication.clubs.Club;
 import com.journeyfy.journeyfytravelapplication.hotels.Hotel;
 import com.journeyfy.journeyfytravelapplication.museums.Museum;
 import com.journeyfy.journeyfytravelapplication.users.User;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
+@AllArgsConstructor
 public class WishDto {
     @JsonProperty("id")
     private Long id;
 
     @JsonProperty("user_id")
-    private User user;
+    private Long userId;
 
-    @JsonProperty("activity_id")
-    private Activity activity;
+    @JsonProperty("name")
+    private String name;
 
-    @JsonProperty("club_id")
-    private Club club;
+    @JsonProperty("activity_entity_id")
+    private Long activityEntityId;
 
-    @JsonProperty("hotel_id")
-    private Hotel hotel;
-
-    @JsonProperty("museum_id")
-    private Museum museum;
 
 
 }
