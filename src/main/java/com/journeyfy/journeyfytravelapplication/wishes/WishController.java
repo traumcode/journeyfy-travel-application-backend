@@ -7,11 +7,14 @@ import com.journeyfy.journeyfytravelapplication.clubs.ClubRepository;
 import com.journeyfy.journeyfytravelapplication.hotels.Hotel;
 import com.journeyfy.journeyfytravelapplication.hotels.HotelRepository;
 import com.journeyfy.journeyfytravelapplication.museums.MuseumRepository;
+import com.journeyfy.journeyfytravelapplication.users.User;
 import com.journeyfy.journeyfytravelapplication.users.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -30,6 +33,12 @@ public class WishController {
         wish1.setName(wish.getName());
         wishRepository.save(wish1);
 
+    }
+
+    @GetMapping(path = "/all-wishes/{id}")
+    public List<Wish> getAllWishesByUserId(@PathVariable Long id){
+        User user = userRepository.findById(id).get();
+        return wishRepository.getAllByUser(user);
     }
 
 }
