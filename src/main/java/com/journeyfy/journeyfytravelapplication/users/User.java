@@ -1,6 +1,7 @@
 package com.journeyfy.journeyfytravelapplication.users;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.journeyfy.journeyfytravelapplication.enums.Gender;
@@ -32,6 +33,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Post> posts;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference
     private List<Wish> wish;
     public User(String userName, String email, String password) {
         this.userName = userName;
