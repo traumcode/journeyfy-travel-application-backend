@@ -19,7 +19,6 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "`user`")
-@EqualsAndHashCode
 public class User {
     @Id
     @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)

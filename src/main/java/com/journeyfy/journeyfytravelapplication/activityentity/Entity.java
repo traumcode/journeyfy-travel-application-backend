@@ -19,7 +19,6 @@ import java.util.List;
 @Setter
 @DiscriminatorColumn(name="type",
         discriminatorType = DiscriminatorType.STRING)
-@EqualsAndHashCode
 public abstract class Entity {
     @Id
     @SequenceGenerator(name = "activity_entity_sequence", sequenceName = "activity_entity_sequence", allocationSize = 1)
