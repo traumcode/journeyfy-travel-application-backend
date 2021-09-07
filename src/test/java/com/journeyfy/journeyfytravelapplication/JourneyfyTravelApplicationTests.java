@@ -1,7 +1,6 @@
 package com.journeyfy.journeyfytravelapplication;
 
-import com.journeyfy.journeyfytravelapplication.hotels.Hotel;
-import com.journeyfy.journeyfytravelapplication.hotels.HotelRepository;
+import com.journeyfy.journeyfytravelapplication.components.hotels.HotelRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

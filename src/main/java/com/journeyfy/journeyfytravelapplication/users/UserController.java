@@ -33,12 +33,10 @@ public class UserController {
 
     @PostMapping(path="/login")
     public User findUser(@RequestBody User user) {
-        System.out.println(user.getUserName());
-        System.out.println(user.getPassword());
-        if(userRepository.getUserByUserNameAndPassword(user.getUserName(), user.getPassword()) == null) {
+        if(userRepository.getUserByUserNameAndPassword(user.getUsername(), user.getPassword()) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        return userRepository.getUserByUserNameAndPassword(user.getUserName(), user.getPassword());
+        return userRepository.getUserByUserNameAndPassword(user.getUsername(), user.getPassword());
     }
 
 
