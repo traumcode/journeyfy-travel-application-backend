@@ -1,10 +1,14 @@
 package com.journeyfy.journeyfytravelapplication.users;
 
 
+import com.journeyfy.journeyfytravelapplication.exception.TokenRefreshException;
+import com.journeyfy.journeyfytravelapplication.payload.request.LogOutRequest;
 import com.journeyfy.journeyfytravelapplication.payload.request.LoginRequest;
 import com.journeyfy.journeyfytravelapplication.payload.request.SignUpRequest;
+import com.journeyfy.journeyfytravelapplication.payload.request.TokenRefreshRequest;
 import com.journeyfy.journeyfytravelapplication.payload.response.JwtResponse;
 import com.journeyfy.journeyfytravelapplication.payload.response.MessageResponse;
+import com.journeyfy.journeyfytravelapplication.payload.response.TokenRefreshResponse;
 import com.journeyfy.journeyfytravelapplication.security.jwt.JwtUtils;
 import com.journeyfy.journeyfytravelapplication.security.models.RefreshToken;
 import com.journeyfy.journeyfytravelapplication.security.services.RefreshTokenService;
@@ -18,6 +22,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -55,12 +60,22 @@ public class UserController {
     public User getUserProfileByUsername(@PathVariable(value = "username") String username) {
         return userRepository.findByUsername(username).get();
     }
-    
-    //TODO update user info
-    
+
+
     @GetMapping(path = "/my-profile/{id}")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public User getUserByIdForProfilePage(@PathVariable(value = "id") Long id) {
-       return userRepository.findById(id).get();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.info(authentication.getName());
+        log.info((String) authentication.getPrincipal());
+        return userRepository.findById(id).get();
+    }
+
+    //TODO update user info
+
+    @PatchMapping(path = "/edit-profile")
+    public User editUserProfile(@RequestBody User user) {
+        return null;
     }
 
     @PostMapping(path="/login")
@@ -123,6 +138,27 @@ public class UserController {
         userRepository.save(user);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 
+    }
+
+    @PostMapping("/refreshtoken")
+    public ResponseEntity<?> refreshtoken(@Valid @RequestBody TokenRefreshRequest request) {
+        String requestRefreshToken = request.getRefreshToken();
+
+        return refreshTokenService.findByToken(requestRefreshToken)
+                .map(refreshTokenService::verifyExpiration)
+                .map(RefreshToken::getUser)
+                .map(user -> {
+                    String token = jwtUtils.generateTokenFromUsername(user.getUsername());
+                    return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
+                })
+                .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
+                        "Refresh token is not in database!"));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logoutUser(@Valid @RequestBody LogOutRequest logOutRequest) {
+        refreshTokenService.deleteByUserId(logOutRequest.getUserId());
+        return ResponseEntity.ok(new MessageResponse("Log out successful!"));
     }
 
 //    public User findUser(@RequestBody User user) {
