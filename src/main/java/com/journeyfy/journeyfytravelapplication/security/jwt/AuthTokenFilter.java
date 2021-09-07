@@ -4,8 +4,11 @@ import com.journeyfy.journeyfytravelapplication.security.services.UserDetailsSer
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -30,11 +33,13 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 String username = jwtUtils.getUsernameFromJwtToken(jwt);
                 UserDetails userDetails = userDetailsServiceImplementation.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-
+                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
-        } catch () {
-
+        } catch (Exception e) {
+            log.error("Cannot set user authentication: {}", e.getMessage());
         }
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
     private String parseJwt(HttpServletRequest request) {
