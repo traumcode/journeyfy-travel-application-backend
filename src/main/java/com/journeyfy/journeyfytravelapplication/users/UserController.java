@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -50,11 +51,17 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @GetMapping(path = "/{id}")
-    public User getUserById(@PathVariable(value = "id") Long id) {
+    @GetMapping(path = "/{username}")
+    public User getUserProfileByUsername(@PathVariable(value = "username") String username) {
+        return userRepository.findByUsername(username).get();
+    }
+    
+    //TODO update user info
+    
+    @GetMapping(path = "/my-profile/{id}")
+    public User getUserByIdForProfilePage(@PathVariable(value = "id") Long id) {
        return userRepository.findById(id).get();
     }
-
 
     @PostMapping(path="/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {

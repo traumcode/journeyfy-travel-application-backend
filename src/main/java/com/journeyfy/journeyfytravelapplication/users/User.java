@@ -57,6 +57,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.gender = gender;
+        this.joinedDate = LocalDate.now();
     }
 
 }
