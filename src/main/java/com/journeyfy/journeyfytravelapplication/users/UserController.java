@@ -1,6 +1,7 @@
 package com.journeyfy.journeyfytravelapplication.users;
 
 
+import com.journeyfy.journeyfytravelapplication.advice.ErrorMessage;
 import com.journeyfy.journeyfytravelapplication.exception.TokenRefreshException;
 import com.journeyfy.journeyfytravelapplication.payload.request.LogOutRequest;
 import com.journeyfy.journeyfytravelapplication.payload.request.LoginRequest;
@@ -10,27 +11,25 @@ import com.journeyfy.journeyfytravelapplication.payload.response.JwtResponse;
 import com.journeyfy.journeyfytravelapplication.payload.response.MessageResponse;
 import com.journeyfy.journeyfytravelapplication.payload.response.TokenRefreshResponse;
 import com.journeyfy.journeyfytravelapplication.security.jwt.JwtUtils;
-import com.journeyfy.journeyfytravelapplication.security.models.RefreshToken;
-import com.journeyfy.journeyfytravelapplication.security.services.RefreshTokenService;
 import com.journeyfy.journeyfytravelapplication.security.services.UserDetailsImplementation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.security.Principal;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -44,41 +43,42 @@ public class UserController {
     AuthenticationManager authenticationManager;
     JwtUtils jwtUtils;
     PasswordEncoder passwordEncoder;
-    RefreshTokenService refreshTokenService;
 
-    @DeleteMapping(path = "/{id}/delete")
-    public void deleteUserById(@PathVariable(value = "id") Long id){
-        userRepository.delete(userRepository.getById(id));
-    }
 
     @GetMapping(path = "/all-users")
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    @GetMapping(path = "/{username}")
+    @GetMapping(path = "/profile/{username}")
     public User getUserProfileByUsername(@PathVariable(value = "username") String username) {
         return userRepository.findByUsername(username).get();
     }
 
-
-    @GetMapping(path = "/my-profile/{id}")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public User getUserByIdForProfilePage(@PathVariable(value = "id") Long id) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        log.info(authentication.getName());
-        log.info((String) authentication.getPrincipal());
-        return userRepository.findById(id).get();
-    }
-
     //TODO update user info
 
-    @PatchMapping(path = "/edit-profile")
-    public User editUserProfile(@RequestBody User user) {
-        return null;
+    @PatchMapping(path = "/profile/{username}/edit-profile")
+    public void editUserProfile(@PathVariable(value = "username") String username, @RequestBody User user, Principal principal) {
+        Optional<User> userFound = userRepository.findByUsername(username);
+        if (userFound.isPresent()) {
+            if (Objects.equals(userFound.get().getUsername(), principal.getName())) {
+                userFound.get().setUsername(user.getUsername());
+                userFound.get().setEmail(user.getEmail());
+                userFound.get().setCity(user.getCity());
+                userFound.get().setCountry(user.getCountry());
+                userFound.get().setDescription(user.getDescription());
+                userFound.get().setGender(user.getGender());
+                userFound.get().setJoinedDate(user.getJoinedDate());
+                userFound.get().setRoles(userFound.get().getRoles());
+                userFound.get().setPassword(userFound.get().getPassword());
+                userRepository.save(userFound.get());
+            } else {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to edit this profile");
+            }
+        }
     }
 
-    @PostMapping(path="/login")
+    @PostMapping(path = "/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -87,19 +87,18 @@ public class UserController {
         List<String> roles = userDetailsImplementation.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
-        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetailsImplementation.getId());
-        return ResponseEntity.ok(new JwtResponse(jwt, refreshToken.getToken(), userDetailsImplementation.getId(), userDetailsImplementation.getUsername(),
+        return ResponseEntity.ok(new JwtResponse(jwt, userDetailsImplementation.getId(), userDetailsImplementation.getUsername(),
                 userDetailsImplementation.getEmail(), roles));
     }
 
     @PostMapping(path = "/add-user")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-        if(userRepository.existsByUsername(signUpRequest.getUsername())) {
+        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error, username is already taken"));
         }
-        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error, email is already taken"));
@@ -109,11 +108,11 @@ public class UserController {
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
         log.info(roleRepository.findByName(UserRole.ROLE_USER).toString());
-        if(strRoles == null){
+        if (strRoles == null) {
             Role userRole = roleRepository.findByName(UserRole.ROLE_USER)
                     .orElseThrow(() -> new RuntimeException("error: Role is not found."));
             roles.add(userRole);
-        }else{
+        } else {
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin" -> {
@@ -140,36 +139,20 @@ public class UserController {
 
     }
 
-    @PostMapping("/refreshtoken")
-    public ResponseEntity<?> refreshtoken(@Valid @RequestBody TokenRefreshRequest request) {
-        String requestRefreshToken = request.getRefreshToken();
-
-        return refreshTokenService.findByToken(requestRefreshToken)
-                .map(refreshTokenService::verifyExpiration)
-                .map(RefreshToken::getUser)
-                .map(user -> {
-                    String token = jwtUtils.generateTokenFromUsername(user.getUsername());
-                    return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
-                })
-                .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
-                        "Refresh token is not in database!"));
-    }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logoutUser(@Valid @RequestBody LogOutRequest logOutRequest) {
-        refreshTokenService.deleteByUserId(logOutRequest.getUserId());
+    public ResponseEntity<?> logoutUser() {
+        SecurityContextHolder.clearContext();
         return ResponseEntity.ok(new MessageResponse("Log out successful!"));
     }
 
-//    public User findUser(@RequestBody User user) {
-//        if(userRepository.getUserByUsernameAndPassword(user.getUsername(), user.getPassword()) == null) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//        }
-//        return userRepository.getUserByUsernameAndPassword(user.getUsername(), user.getPassword());
-//    }
-
-//    @PostMapping(path = "/add-user")
-//    public void addUser(@RequestBody User user){
-//        userRepository.save(user);
-//    }
+    @DeleteMapping("/{username}/delete")
+    @Transactional
+    public ResponseEntity<?> deleteUser(@PathVariable("username") String username) {
+        User user = userRepository.findByUsername(username).get();
+        userRepository.delete(user);
+        return ResponseEntity.ok(new MessageResponse("Deleted successfully!"));
+    }
 }
+
+

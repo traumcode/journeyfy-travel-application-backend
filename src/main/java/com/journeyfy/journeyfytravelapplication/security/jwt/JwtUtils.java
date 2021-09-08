@@ -31,9 +31,7 @@ public class JwtUtils {
     }
 
     public String generateTokenFromUsername(String username) {
-        User user = userRepository.findByUsername(username).get();
-        Set<Role> authorities = user.getRoles();
-        return Jwts.builder().setSubject(username).claim("roles", authorities)
+        return Jwts.builder().setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
@@ -48,7 +46,7 @@ public class JwtUtils {
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
-
+            return true;
         } catch (SignatureException e) {
             log.error("Invalid JWT signature: {}", e.getMessage());
         } catch (MalformedJwtException e) {
