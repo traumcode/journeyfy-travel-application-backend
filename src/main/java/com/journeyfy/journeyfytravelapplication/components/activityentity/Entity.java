@@ -1,8 +1,10 @@
 package com.journeyfy.journeyfytravelapplication.components.activityentity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.journeyfy.journeyfytravelapplication.components.enums.ActivityType;
 import com.journeyfy.journeyfytravelapplication.components.posts.Post;
+import com.journeyfy.journeyfytravelapplication.components.trips.Trip;
 import com.journeyfy.journeyfytravelapplication.components.wishes.Wish;
 import lombok.*;
 
@@ -15,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@DiscriminatorColumn(name="type",
+@DiscriminatorColumn(name = "type",
         discriminatorType = DiscriminatorType.STRING)
 public abstract class Entity {
     @Id
@@ -40,6 +42,10 @@ public abstract class Entity {
     @OneToMany(mappedBy = "entity", cascade = CascadeType.ALL)
     @JsonIgnore
     protected List<Post> posts;
+    //    @ManyToMany(mappedBy = "entity", cascade = CascadeType.ALL)
+//    @JsonIgnore
+    @ManyToMany(mappedBy = "entities")
+    protected List<Trip> trips;
 
 
     public Entity(String pictureLink, String description, double rating, double price, String cityName, String name, String siteLink, String address, ActivityType activityType) {
