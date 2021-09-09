@@ -4,6 +4,7 @@ package com.journeyfy.journeyfytravelapplication.users;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.journeyfy.journeyfytravelapplication.components.enums.Gender;
 import com.journeyfy.journeyfytravelapplication.components.posts.Post;
+import com.journeyfy.journeyfytravelapplication.components.trips.Trip;
 import com.journeyfy.journeyfytravelapplication.components.wishes.Wish;
 import lombok.*;
 
@@ -12,6 +13,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -51,6 +53,9 @@ public class User {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "user_trips", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "trip_id") )
+    private List<Trip> trips = new ArrayList<>();
 
     public User(String username, String email, String password, Gender gender) {
         this.username = username;
@@ -58,6 +63,10 @@ public class User {
         this.password = password;
         this.gender = gender;
         this.joinedDate = LocalDate.now();
+    }
+
+    public void addTrip(Trip trip) {
+        trips.add(trip);
     }
 
 }

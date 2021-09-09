@@ -6,9 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface WishRepository extends JpaRepository<Wish, Long> {
     Wish findWishByName(String name);
-    List<Wish> getAllByUser(User user);
+    Set<Wish> getAllByUser(User user);
+    boolean existsByEntityIdAndUserId(Long entityId, Long userId);
 }

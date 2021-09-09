@@ -38,4 +38,5 @@ public class Post {
     @JoinColumn(name = "entity_id")
     private Entity entity;
 
+    //TODO calculate rating based on review rating
 }

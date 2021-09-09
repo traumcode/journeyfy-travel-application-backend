@@ -1,13 +1,17 @@
 package com.journeyfy.journeyfytravelapplication.components.activityentity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.journeyfy.journeyfytravelapplication.components.enums.ActivityType;
 import com.journeyfy.journeyfytravelapplication.components.posts.Post;
+import com.journeyfy.journeyfytravelapplication.components.trips.Trip;
 import com.journeyfy.journeyfytravelapplication.components.wishes.Wish;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 
 @javax.persistence.Entity
@@ -15,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@DiscriminatorColumn(name="type",
+@DiscriminatorColumn(name = "type",
         discriminatorType = DiscriminatorType.STRING)
 public abstract class Entity {
     @Id
@@ -36,10 +40,15 @@ public abstract class Entity {
     protected ActivityType activityType;
     @OneToMany(mappedBy = "entity", cascade = CascadeType.ALL)
     @JsonIgnore
-    protected List<Wish> wishes;
+    protected Set<Wish> wishes;
     @OneToMany(mappedBy = "entity", cascade = CascadeType.ALL)
     @JsonIgnore
     protected List<Post> posts;
+    //    @ManyToMany(mappedBy = "entity", cascade = CascadeType.ALL)
+//    @JsonIgnore
+    @OneToMany(mappedBy = "entity", cascade = CascadeType.ALL)
+    @JsonIgnore
+    protected List<Trip> trips;
 
 
     public Entity(String pictureLink, String description, double rating, double price, String cityName, String name, String siteLink, String address, ActivityType activityType) {
@@ -53,4 +62,14 @@ public abstract class Entity {
         this.address = address;
         this.activityType = activityType;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Entity entity = (Entity) o;
+        return id.equals(entity.id);
+    }
+
+
 }
