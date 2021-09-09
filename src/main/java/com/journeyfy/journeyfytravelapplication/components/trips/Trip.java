@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.journeyfy.journeyfytravelapplication.users.User;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import com.journeyfy.journeyfytravelapplication.components.activityentity.Entity;
 
@@ -13,26 +14,24 @@ import java.util.List;
 @javax.persistence.Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
 public class Trip {
     @Id
     @SequenceGenerator(name = "trip_sequence", sequenceName = "trip_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "trip_sequence")
     private Long id;
-    private int budget;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    @JsonBackReference
-    private User user;
-    @ElementCollection
-    private List<String> elements;
-    //    @ManyToMany
-//    @JoinColumn(name = "entity_id")
-    @ManyToMany
-    @JoinTable(
-            name = "trip_entities",
-            joinColumns = @JoinColumn(name = "trip_id"),
-            inverseJoinColumns = @JoinColumn(name = "entity_id"))
-    private List<Entity> entities;
+    private String cityName;
+    private double budget;
+    private String name;
+    @ManyToOne()
+    @JoinColumn(name = "activity_entity_id")
+    private Entity entity;
 
-
+    public Trip(String cityName, String name, double budget, Entity entity) {
+        this.cityName = cityName;
+        this.name = name;
+        this.budget = budget;
+        this.entity = entity;
+    }
 }

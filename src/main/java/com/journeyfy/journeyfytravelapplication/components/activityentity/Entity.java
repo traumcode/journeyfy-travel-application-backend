@@ -10,6 +10,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 
 @javax.persistence.Entity
@@ -38,13 +40,14 @@ public abstract class Entity {
     protected ActivityType activityType;
     @OneToMany(mappedBy = "entity", cascade = CascadeType.ALL)
     @JsonIgnore
-    protected List<Wish> wishes;
+    protected Set<Wish> wishes;
     @OneToMany(mappedBy = "entity", cascade = CascadeType.ALL)
     @JsonIgnore
     protected List<Post> posts;
     //    @ManyToMany(mappedBy = "entity", cascade = CascadeType.ALL)
 //    @JsonIgnore
-    @ManyToMany(mappedBy = "entities")
+    @OneToMany(mappedBy = "entity", cascade = CascadeType.ALL)
+    @JsonIgnore
     protected List<Trip> trips;
 
 
@@ -59,4 +62,14 @@ public abstract class Entity {
         this.address = address;
         this.activityType = activityType;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Entity entity = (Entity) o;
+        return id.equals(entity.id);
+    }
+
+
 }

@@ -2,7 +2,6 @@ package com.journeyfy.journeyfytravelapplication.users;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.journeyfy.journeyfytravelapplication.components.enums.Gender;
 import com.journeyfy.journeyfytravelapplication.components.posts.Post;
 import com.journeyfy.journeyfytravelapplication.components.trips.Trip;
@@ -54,8 +53,9 @@ public class User {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Trip> trips;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "user_trips", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "trip_id") )
+    private List<Trip> trips = new ArrayList<>();
 
     public User(String username, String email, String password, Gender gender) {
         this.username = username;
@@ -63,6 +63,10 @@ public class User {
         this.password = password;
         this.gender = gender;
         this.joinedDate = LocalDate.now();
+    }
+
+    public void addTrip(Trip trip) {
+        trips.add(trip);
     }
 
 }
