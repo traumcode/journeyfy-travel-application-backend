@@ -1,9 +1,3 @@
-INSERT INTO "user"(id, user_name, email, password, gender)
-VALUES (1, 'traumcode', 'silviubocsa@gmail.com', 'parola123', 'MALE');
-INSERT INTO "user"(id, user_name, email, password, gender)
-VALUES (2, 'pisicoder', 'siminatabac@gmail.com', 'parola123', 'FEMALE');
-INSERT INTO "user"(id, user_name, email, password, gender)
-VALUES (3, 'floaredemai', 'mateiflorentina@gmail.com', 'parola123', 'FEMALE');
 
 INSERT INTO entity(type, id, name, address, city_name, description, picture_link, rating, price, hotel_class, site_link, activity_type)
 VALUES ('museum', 1,
@@ -269,7 +263,7 @@ INSERT INTO entity (type, id, name, address, city_name, description, picture_lin
 VALUES ('hotel', 23, 'InterContinental Paris - Le Grand', null, 'Paris',
         'The InterContinental Paris Le Grand, opened during the reign of Napoleon III, is located in the very heart of the city: across the street from the Opéra Garnier, close to some of the best-known Parisian attractions, world-famous department stores and the wonderful Place Vendôme. The hotel contains 470 rooms, all richly decorated in the colours of the Opéra, and a warmly illuminated haven of peace and serenity in the bustle of Parisian life: la Verrière.
 ','https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/28/bd/f7/view-from-property.jpg?w=1200&h=-1&s=1',
-        4.5, 1.568, 4,
+        4.5, 1568, 4,
         'https://www.tripadvisor.com/Hotel_Review-g187147-d207742-Reviews-InterContinental_Paris_Le_Grand-Paris_Ile_de_France.html', 'HOTEL');
 INSERT INTO entity (type, id, name, address, city_name, description, picture_link, rating, price, hotel_class, site_link, activity_type)
 VALUES ('hotel', 24, 'Hotel La Manufacture', null, 'Paris'
@@ -281,7 +275,7 @@ INSERT INTO entity (type, id, name, address, city_name, description, picture_lin
 VALUES ('hotel', 25, 'Grand Hotel du Palais Royal', null, 'Paris'
        , 'Ideally located between the Louvre Museum and the Opera house, opposite the Palais Royal gardens, this 5 star hotel, a refined cocoon beautifully decorated by the renowned Pierre-Yves Rochon, is a must-visit address in the heart of Paris. Behind its majestic facade listed as a historical monument, the hotel counts 68 rooms and suites, some with spectacular views of Paris, a restaurant, a bar (after work, tea time), a meeting room, a fitness center with Turkish bath and a Spa with a double cabin.'
        , 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/0f/c2/71/junior-suite.jpg?w=1200&h=-1&s=1'
-       , 5.0, 1.829,  5
+       , 5.0, 1829,  5
        , 'https://www.tripadvisor.com/Hotel_Review-g187147-d617625-Reviews-Grand_Hotel_du_Palais_Royal-Paris_Ile_de_France.html', 'HOTEL');
 INSERT INTO entity (type, id, name, address, city_name, description, picture_link, rating, price, hotel_class, site_link, activity_type)
 VALUES ('hotel', 26, 'Hotel Carlton Lyon - MGallery Collection', null, 'Lyon'
@@ -299,7 +293,7 @@ INSERT INTO entity (type, id, name, address, city_name, description, picture_lin
 VALUES ( 'hotel', 28, 'Boscolo Lyon Hotel & Spa', null, 'Lyon'
        , 'In a splendid setting between the Rhone and the Saone, in the most prestigious district of Lyon, a few steps from Place Bellecour and the Grand Hotel-Dieu, a majestic 19th century building, expertly renovated, is intended to become one of the most luxurious 5 stars hotel of Lyon. Let yourself be enchanted by the view from your room overlooking the Rhone or relax, while tasting a “ristretto coffee” in the luxurious Grand Salon, created in the former winter garden surmounted by a panoramic glass roof. The peculiarity of the Luxury Hotel Boscolo Lyon consists in the delicate balance between the splendor of the Haussmann’ architecture and the loveliness of the atmospheres created by the black marble, Vicenza stone, sophisticated curtains and other precious materials. Once acquired the hotel in 2002, Angelo Boscolo undertakes its metamorphosis at the end of 2018. The doors of the new Boscolo Lyon open.'
        , 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/59/a1/54/fredericdurantet.jpg?w=1200&h=-1&s=1'
-       , 4.5,1.051,  5
+       , 4.5,1051,  5
        , 'https://www.tripadvisor.com/Hotel_Review-g187265-d15111966-Reviews-Boscolo_Lyon_Hotel_Spa-Lyon_Rhone_Auvergne_Rhone_Alpes.html', 'HOTEL');
 INSERT INTO entity (type, id, name, address, city_name, description, picture_link, rating, price, hotel_class, site_link, activity_type)
 VALUES ('hotel', 29, 'H10 Madison', null, 'Barcelona',
@@ -311,7 +305,7 @@ INSERT INTO entity (type, id, name, address, city_name, description, picture_lin
 VALUES ('hotel', 30, 'Serras', null,'Barcelona',
         'This luxury boutique hotel comprises 28 trendy and very spacious rooms and suites, a Michelin star Chef Restaurant and a chill out rooftop terrace. This elegant 5-star boutique hotel overlooking the new luxury Port Vell alongside the Mediterranean Sea, offers a unique hideaway with a modern understated decor. Ideal for your weekend breaks, business trips and luxury holidays in the heart of Barcelona. It boasts a cool, trendy atmosphere, world class amenities and dedicated personal service for a truly memorable hotel experience in the first studio of Pablo Picasso on vibrant Barrio Gotico. Restaurant Informal Our Michelin Star Chef invites you to experience his Catalan specialties in a delicious selection of Mediterranean tapas, prepared from fresh seasonal ingredients sourced from our local market. Rooftop Terrace Offering breathtaking views of the Mediterranean Sea and the new Marina of Port Vell, our stylish rooftop terrace comes beautifully appointed with a superb infinity pool and comfortable lounge area.'
            ,'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/66/69/4e/rooftop-the-serras.jpg?w=1200&h=-1&s=1'
-           , 5.0, 1.139, 5,
+           , 5.0, 1139, 5,
         'https://www.tripadvisor.com/Hotel_Review-g187497-d7142609-Reviews-Serras-Barcelona_Catalonia.html', 'HOTEL');
 INSERT INTO entity (type, id, name, address, city_name, description, picture_link, rating, price, hotel_class, site_link, activity_type)
 VALUES ('hotel', 31, 'Hotel Jazz', null, 'Barcelona',
@@ -343,13 +337,13 @@ INSERT INTO entity (type, id, name, address, city_name, description, picture_lin
 VALUES ('hotel', 35, 'Radisson Blu Hotel', null, 'Berlin',
         'The Radisson Blu Hotel is one of the most exciting hotels in Berlin-Mitte. It is located in the historic centre directly on the bank of the river Spree and opposite to the Berlin Cathedral. Just a strolls away are restaurants, bars, boutiques, galleries and famous sights, such as Alexanderplatz, Museum Island, Boulevard Unter den Linden and the exclusive shops along Friedrichstrasse. Public transport, Berlin airport and the Messe Berlin fairground are within easy reach. A unique attraction is the AquaDom at the hotel lobby. It is the world’s largest cylindrical aquarium with a fascinating underwater world in one million litres of salt-water. 427 non-smoking guest rooms and suites combine timeless elegance with cutting edge comfort. The clear design in the puristic style reflects urban trends. The dark wood and warm tones of the high-class furniture create a homely atmosphere. All rooms are equipped with flat screen TV, trouser press, laptop-size safe, air-conditioning, minibar, tea and coffee provisions. Wireless-LAN and high-speed Internet access is included in the room rate.'
            ,'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/6a/af/33/nikolai-suite-living.jpg?w=1100&h=-1&s=1'
-           , 4.5, 1.153, 4.5,
+           , 4.5, 1153, 4.5,
         'https://www.tripadvisor.com/Hotel_Review-g187323-d202459-Reviews-Radisson_Blu_Hotel_Berlin-Berlin.html', 'HOTEL');
 INSERT INTO entity (type,id, name, address, city_name, description, picture_link, rating, price, hotel_class, site_link, activity_type)
 VALUES ('hotel',36, 'Regent Berlin',null, 'Berlin',
         'For travelers visiting Berlin, Regent Berlin is an excellent choice for rest and rejuvenation. Well-known for its luxury environment and proximity to great restaurants and attractions, Regent Berlin makes it easy to enjoy the best of Berlin. In 2020 the hotel was awarded as \"Germany´s Leading Hotel\" by the World Travel Awards. Regent Berlin is a luxury hotel offering a flat screen TV and a minibar in the rooms, and it is easy to stay connected during your stay as free Wi-Fi is offered to guests. The hotel features a concierge and room service. Plus, guests can enjoy a fitness center and a Tea Lounge, which have made this a popular choice among travelers visiting Berlin. Given the close proximity of popular landmarks, such as German Historical Museum (0.3 mi) and Museum Island (0.5 mi), guests of Berlin Regent can easily experience some of Berlin''s most well known attractions. While you’re here, be sure to check out some of the seafood restaurants, including KaDeWe Feinschmeckerbars, Ristorante Pizzeria Sapori di Casa, and Pisco Perú, all of which are a short distance from the Regent Berlin Hotel. If you’re looking for something to do, Berlin Humboldtforum (0.5 mi), Reichstag Building (0.7 mi), and Pergamonmuseum (0.5 mi) are a nice way to spend some time, and they are all within walking distance of Regent Berlin. Whether you’re traveling for business, pleasure or both, Regent Berlin is sure to make your visit to Berlin one worth remembering.'
            ,'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1d/00/52/86/hotel-lobby.jpg?w=1200&h=-1&s=1'
-           , 4.5, 1.065, 5,
+           , 4.5, 1065, 5,
         'https://www.tripadvisor.com/Hotel_Review-g187323-d190664-Reviews-Regent_Berlin-Berlin.html', 'HOTEL');
 INSERT INTO entity (type,id, name, address, city_name, description, picture_link, rating, price, hotel_class, site_link, activity_type)
 VALUES ('hotel', 37, 'Hotel AMANO Grand Central',null,'Berlin',
@@ -559,18 +553,9 @@ VALUES ('club', 67, 'Axar', '52 Quai Rambaud, 69002 Lyon, France', 'Lyon',
         'https://www.lynxproaudio.com/www/home/lx-resources/uploads/2018/05/Slider-MYA2-1080x675.jpg', 5, null, null, null, 'CLUB');
 
 
-
-INSERT INTO wish(id, name, activity_entity_id, user_id)
-VALUES (1, 'wish1', 1, 1);
-INSERT INTO wish(id, name, activity_entity_id, user_id)
-VALUES (2,'wish1', 2, 2);
-INSERT INTO wish(id, name, activity_entity_id, user_id)
-VALUES (3, 'wish1', 3, 3);
+INSERT INTO roles(id, name) VALUES (1, 'ROLE_USER');
 
 
-INSERT INTO post(id, activity_type, likes, posted_at, rating, text, title, entity_id, user_id)
-VALUES (1, 'HOTEL', 0, NOW(), 4.5, 'splendid', 'o vacanta reusita', 1, 1);
-INSERT INTO post(id, activity_type, likes, posted_at, rating, text, title, entity_id, user_id)
-VALUES (2, 'CLUB', 0, NOW(), 4.5, 'splendid', 'o vacanta reusita', 2, 2);
-INSERT INTO post(id, activity_type, likes, posted_at, rating, text, title, entity_id, user_id)
-VALUES (3, 'MUSEUM', 0, NOW(), 4.5, 'splendid', 'o vacanta reusita', 3, 3);
+
+
+
