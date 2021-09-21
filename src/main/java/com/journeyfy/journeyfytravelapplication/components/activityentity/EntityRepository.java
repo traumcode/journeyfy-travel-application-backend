@@ -7,10 +7,9 @@ import java.util.List;
 
 public interface EntityRepository extends JpaRepository<Entity, Long> {
 
-    List<Entity> getAllByCityName(String cityName);
     @Query(value = "SELECT * FROM entity WHERE city_name = cast(?1 as text) ORDER BY price ASC", nativeQuery = true)
     List<Entity> getAllByCityNameAndOrderByPriceAsc(String cityName);
 
-
-
+    @Query(value = "SELECT * FROM entity ORDER BY id DESC LIMIT 1", nativeQuery = true)
+    Entity getLastEntity();
 }

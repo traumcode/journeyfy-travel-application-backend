@@ -12,6 +12,7 @@ import javax.persistence.DiscriminatorValue;
 @NoArgsConstructor
 @javax.persistence.Entity
 @DiscriminatorValue("hotel")
+@ToString
 public class Hotel extends Entity {
 
     public Hotel(String pictureLink, String description, double rating, double price, String cityName, String name, String siteLink, String address, ActivityType activityType) {

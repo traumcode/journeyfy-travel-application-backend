@@ -28,9 +28,11 @@ public class WishController {
     @PostMapping(path = "/add-wish")
     public ResponseEntity<?> addWish(@RequestBody WishDto wish){
         Wish wish1 = new Wish();
+        log.info(String.valueOf(wish));
         wish1.setUser(userRepository.findById(wish.getUserId()).get());
         wish1.setEntity(entityRepository.findById(wish.getActivityEntityId()).get());
         wish1.setName(wish.getName());
+
         if(!wishRepository.existsByEntityIdAndUserId(wish.getActivityEntityId(), userRepository.findById(wish.getUserId()).get().getId())) {
             wishRepository.save(wish1);
             return ResponseEntity.ok("Wish added to your wishlist");
