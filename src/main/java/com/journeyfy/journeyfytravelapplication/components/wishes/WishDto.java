@@ -22,7 +22,7 @@ public class WishDto {
     private String name;
 
     @JsonProperty("activity_entity_id")
-    private Long activityEntityId;
+    private String activityEntityId;
 
 
 

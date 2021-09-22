@@ -15,7 +15,7 @@ import javax.persistence.DiscriminatorValue;
 @ToString
 public class Hotel extends Entity {
 
-    public Hotel(String pictureLink, String description, double rating, double price, String cityName, String name, String siteLink, String address, ActivityType activityType) {
-        super(pictureLink, description, rating, price, cityName, name, siteLink, address, ActivityType.HOTEL);
+    public Hotel(String id, String pictureLink, String description, double rating, double price, String cityName, String name, double hotelClass, String siteLink, String address, ActivityType activityType) {
+        super(id, pictureLink, description, rating, price, cityName, name, hotelClass, siteLink, address, ActivityType.MUSEUM);
     }
 }

@@ -37,8 +37,17 @@ public class HotelController {
     @PostMapping("/add-hotel")
     public ResponseEntity<Hotel> addHotel(@RequestBody @Valid Hotel hotel) {
         if(!hotelRepository.existsByName(hotel.getName())) {
-            hotelRepository.save(hotel);
-            return ResponseEntity.ok(hotel);
+            Hotel hotel1 = new Hotel();
+            hotel1.setId(hotel.getId());
+            hotel1.setName(hotel.getName());
+            hotel1.setPictureLink(hotel.getPictureLink());
+            hotel1.setPrice(hotel.getPrice());
+            hotel1.setHotelClass(hotel.getHotelClass());
+            hotel1.setRating(hotel.getRating());
+            hotel1.setCityName(hotel.getCityName());
+            hotelRepository.save(hotel1);
+            log.info(String.valueOf(hotel1));
+            return ResponseEntity.ok(hotel1);
         } else {
             return ResponseEntity.noContent().build();
         }

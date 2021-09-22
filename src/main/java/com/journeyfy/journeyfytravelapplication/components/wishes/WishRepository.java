@@ -12,5 +12,5 @@ import java.util.Set;
 public interface WishRepository extends JpaRepository<Wish, Long> {
     Wish findWishByName(String name);
     Set<Wish> getAllByUser(User user);
-    boolean existsByEntityIdAndUserId(Long entityId, Long userId);
+    boolean existsByEntityIdAndUserId(String entityId, Long userId);
 }
