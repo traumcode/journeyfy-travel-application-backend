@@ -59,7 +59,8 @@ public abstract class Entity {
         this.activityType = activityType;
     }
 
-    public Entity(String id, String pictureLink, String description, Double rating, Double price, String cityName, String name, Double hotelClass, String siteLink, String address, ActivityType activityType) {
+
+    public Entity(String id, String pictureLink, String description, double rating, double price, String cityName, String name, double hotelClass, String siteLink, String address, ActivityType activityType) {
         this.id = id;
         this.pictureLink = pictureLink;
         this.description = description;
@@ -74,7 +75,7 @@ public abstract class Entity {
 
     }
 
-    public Entity(String id, String pictureLink, String description, double rating, double price, String cityName, String name, double hotelClass, String siteLink, String address, ActivityType museum) {
+    public Entity(String id, String pictureLink, String description, double rating, double price, String cityName, String name, String siteLink, String address, ActivityType activity) {
         this.id = id;
         this.pictureLink = pictureLink;
         this.description = description;
@@ -82,11 +83,9 @@ public abstract class Entity {
         this.price = price;
         this.cityName = cityName;
         this.name = name;
-        this.hotelClass = hotelClass;
         this.siteLink = siteLink;
         this.address = address;
-        this.activityType = museum;
-
+        this.activityType = activityType;
     }
 
     @Override

@@ -12,4 +12,6 @@ public interface EntityRepository extends JpaRepository<Entity, String> {
 
     @Query(value = "SELECT * FROM entity ORDER BY id DESC LIMIT 1", nativeQuery = true)
     Entity getLastEntity();
+
+    void deleteEntityById(String entityId);
 }

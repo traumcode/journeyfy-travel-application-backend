@@ -7,10 +7,13 @@ import com.journeyfy.journeyfytravelapplication.users.User;
 import com.journeyfy.journeyfytravelapplication.users.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -24,12 +27,14 @@ public class WishController {
     private final WishRepository wishRepository;
     private final UserRepository userRepository;
     private final EntityRepository entityRepository;
+    private final WishService wishService;
 
     @PostMapping(path = "/add-wish")
     public ResponseEntity<?> addWish(@RequestBody WishDto wish){
         Wish wish1 = new Wish();
         log.info(String.valueOf(wish));
         wish1.setUser(userRepository.findById(wish.getUserId()).get());
+        log.info(String.valueOf(wish.getActivityEntityId()));
         wish1.setEntity(entityRepository.findById(wish.getActivityEntityId()).get());
         wish1.setName(wish.getName());
 
@@ -48,11 +53,10 @@ public class WishController {
     }
 
 
-    @DeleteMapping(path = "/remove/{wishId}")
-    public ResponseEntity<?> deleteWishById(@PathVariable(name = "wishId") Long wishId) {
-        wishRepository.deleteById(wishId);
-        return ResponseEntity.ok("Wish with id " + wishId + " was deleted");
+    @DeleteMapping(path = "/remove/{entityId}/{userId}")
+    @Transactional
+    public ResponseEntity<?> deleteWishById(@PathVariable(name = "entityId") String entityId, @PathVariable(name = "userId") Long userId) {
+        wishRepository.deleteByEntityIdAndUserId(entityId, userId);
+        return ResponseEntity.ok("Wish with id " + entityId + " was deleted");
     }
-
-
 }

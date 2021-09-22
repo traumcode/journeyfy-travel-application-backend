@@ -45,6 +45,7 @@ public class HotelController {
             hotel1.setHotelClass(hotel.getHotelClass());
             hotel1.setRating(hotel.getRating());
             hotel1.setCityName(hotel.getCityName());
+            hotel1.setActivityType(hotel.getActivityType());
             hotelRepository.save(hotel1);
             log.info(String.valueOf(hotel1));
             return ResponseEntity.ok(hotel1);
