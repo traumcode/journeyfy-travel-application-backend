@@ -12,6 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 @javax.persistence.Entity
 @Table(name = "wish")
 public class Wish {

@@ -1,6 +1,5 @@
 package com.journeyfy.journeyfytravelapplication.components.activityentity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.journeyfy.journeyfytravelapplication.components.enums.ActivityType;
 import com.journeyfy.journeyfytravelapplication.components.posts.Post;
@@ -10,7 +9,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 
@@ -23,9 +21,7 @@ import java.util.Set;
         discriminatorType = DiscriminatorType.STRING)
 public abstract class Entity {
     @Id
-    @SequenceGenerator(name = "activity_entity_sequence", sequenceName = "activity_entity_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "activity_entity_sequence")
-    private Long id;
+    private String id;
     protected String pictureLink;
     @Column(length = 5000)
     protected String description;
@@ -40,7 +36,7 @@ public abstract class Entity {
     protected ActivityType activityType;
     @OneToMany(mappedBy = "entity", cascade = CascadeType.ALL)
     @JsonIgnore
-    protected Set<Wish> wishes;
+    protected List<Wish> wishes;
     @OneToMany(mappedBy = "entity", cascade = CascadeType.ALL)
     @JsonIgnore
     protected List<Post> posts;
@@ -52,6 +48,35 @@ public abstract class Entity {
 
 
     public Entity(String pictureLink, String description, double rating, double price, String cityName, String name, String siteLink, String address, ActivityType activityType) {
+        this.pictureLink = pictureLink;
+        this.description = description;
+        this.rating = rating;
+        this.price = price;
+        this.cityName = cityName;
+        this.name = name;
+        this.siteLink = siteLink;
+        this.address = address;
+        this.activityType = activityType;
+    }
+
+
+    public Entity(String id, String pictureLink, String description, double rating, double price, String cityName, String name, double hotelClass, String siteLink, String address, ActivityType activityType) {
+        this.id = id;
+        this.pictureLink = pictureLink;
+        this.description = description;
+        this.rating = rating;
+        this.price = price;
+        this.cityName = cityName;
+        this.name = name;
+        this.hotelClass = hotelClass;
+        this.siteLink = siteLink;
+        this.address = address;
+        this.activityType = activityType;
+
+    }
+
+    public Entity(String id, String pictureLink, String description, double rating, double price, String cityName, String name, String siteLink, String address, ActivityType activity) {
+        this.id = id;
         this.pictureLink = pictureLink;
         this.description = description;
         this.rating = rating;

@@ -10,4 +10,5 @@ public interface ActivityRepository extends JpaRepository<Activity, Long> {
     List<Activity> getActivitiesByActivityType(ActivityType activityType);
     List<Activity> getActivitiesByActivityTypeAndRatingGreaterThan(ActivityType activityType, double rating);
 
+    boolean existsByName(String name);
 }
