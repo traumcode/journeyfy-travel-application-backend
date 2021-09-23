@@ -1,15 +1,8 @@
 package com.journeyfy.journeyfytravelapplication.users;
-
-
-import com.journeyfy.journeyfytravelapplication.advice.ErrorMessage;
-import com.journeyfy.journeyfytravelapplication.exception.TokenRefreshException;
-import com.journeyfy.journeyfytravelapplication.payload.request.LogOutRequest;
 import com.journeyfy.journeyfytravelapplication.payload.request.LoginRequest;
 import com.journeyfy.journeyfytravelapplication.payload.request.SignUpRequest;
-import com.journeyfy.journeyfytravelapplication.payload.request.TokenRefreshRequest;
 import com.journeyfy.journeyfytravelapplication.payload.response.JwtResponse;
 import com.journeyfy.journeyfytravelapplication.payload.response.MessageResponse;
-import com.journeyfy.journeyfytravelapplication.payload.response.TokenRefreshResponse;
 import com.journeyfy.journeyfytravelapplication.security.jwt.JwtUtils;
 import com.journeyfy.journeyfytravelapplication.security.services.UserDetailsImplementation;
 import lombok.AllArgsConstructor;
@@ -22,10 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
@@ -59,34 +50,22 @@ public class UserController {
 
     //TODO update user info
 
-    @PatchMapping(path = "/profile/{username}/edit-profile")
-    public ResponseEntity<?> editUserProfile(@PathVariable(value = "username") String username, @RequestBody User user, Principal principal) {
-        Optional<User> userFound = userRepository.findByUsername(username);
-        List<GrantedAuthority> authorities = user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
-                .collect(Collectors.toList());
-        UserDetailsImplementation userDetailsImplementation = new UserDetailsImplementation(user.getId(), user.getUsername(), user.getEmail(),user.getPassword(), authorities);
 
+    @PostMapping(path = "/profile/{username}/edit-profile")
+    public ResponseEntity<?> editUserProfile(@PathVariable(value = "username") String username, @RequestBody User user) {
+        Optional<User> userFound = userRepository.findByUsername(username);
         if (userFound.isPresent()) {
-            if (Objects.equals(userFound.get().getUsername(), userDetailsImplementation.getUsername())) {
-                userFound.get().setUsername(user.getUsername());
-                userFound.get().setEmail(user.getEmail());
-                userFound.get().setCity(user.getCity());
-                userFound.get().setCountry(user.getCountry());
-                userFound.get().setDescription(user.getDescription());
-                userFound.get().setGender(user.getGender());
-                userFound.get().setRoles(userFound.get().getRoles());
-                userFound.get().setPassword(userFound.get().getPassword());
-                userRepository.save(userFound.get());
-                String jwt = jwtUtils.generateJwtToken(userDetailsImplementation);
-                List<String> roles = userDetailsImplementation.getAuthorities().stream()
-                        .map(item -> item.getAuthority())
-                        .collect(Collectors.toList());
-                return ResponseEntity.ok(new JwtResponse(jwt, userDetailsImplementation.getId(), userDetailsImplementation.getUsername(),
-                        userDetailsImplementation.getEmail(), roles));
-            } else {
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to edit this profile");
-            }
+            userFound.get().setUsername(user.getUsername());
+            userFound.get().setEmail(user.getEmail());
+            userFound.get().setCity(user.getCity());
+            userFound.get().setCountry(user.getCountry());
+            userFound.get().setDescription(user.getDescription());
+            userFound.get().setGender(user.getGender());
+            userFound.get().setJoinedDate(user.getJoinedDate());
+            userFound.get().setRoles(userFound.get().getRoles());
+            userFound.get().setPassword(userFound.get().getPassword());
+            userRepository.save(userFound.get());
+            return ResponseEntity.ok(userFound);
         }
         return ResponseEntity.badRequest().build();
     }

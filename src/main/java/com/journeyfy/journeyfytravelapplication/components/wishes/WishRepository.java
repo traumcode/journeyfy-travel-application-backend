@@ -13,7 +13,6 @@ import java.util.Set;
 
 @Repository
 public interface WishRepository extends JpaRepository<Wish, Long> {
-    Set<Wish> getAllByUser(User user);
     boolean existsByEntityIdAndUserId(String entityId, Long userId);
 
     @Modifying
@@ -22,4 +21,7 @@ public interface WishRepository extends JpaRepository<Wish, Long> {
                                    @Param("userId") Long userId);
 
     Wish findByEntityIdAndUserId(String entityId, Long userId);
+
+    List<Wish> getAllByUser(User user);
+
 }

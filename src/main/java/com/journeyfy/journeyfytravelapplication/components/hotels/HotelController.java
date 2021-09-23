@@ -55,9 +55,9 @@ public class HotelController {
     }
 
     @GetMapping("/last")
-    public ResponseEntity<Hotel> getLastHotel() {
+    public Hotel getLastHotel() {
         Hotel hotel = (Hotel) entityRepository.getLastEntity();
-        return ResponseEntity.ok(hotel);
+        return hotel;
     }
 
 

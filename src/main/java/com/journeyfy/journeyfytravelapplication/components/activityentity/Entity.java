@@ -36,7 +36,7 @@ public abstract class Entity {
     protected ActivityType activityType;
     @OneToMany(mappedBy = "entity", cascade = CascadeType.ALL)
     @JsonIgnore
-    protected Set<Wish> wishes;
+    protected List<Wish> wishes;
     @OneToMany(mappedBy = "entity", cascade = CascadeType.ALL)
     @JsonIgnore
     protected List<Post> posts;

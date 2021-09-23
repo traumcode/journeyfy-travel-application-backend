@@ -1,22 +1,14 @@
 package com.journeyfy.journeyfytravelapplication.components.wishes;
-
-
-import com.journeyfy.journeyfytravelapplication.advice.ErrorMessage;
 import com.journeyfy.journeyfytravelapplication.components.activityentity.EntityRepository;
 import com.journeyfy.journeyfytravelapplication.users.User;
 import com.journeyfy.journeyfytravelapplication.users.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
+
 
 @RestController
 @AllArgsConstructor
@@ -47,9 +39,10 @@ public class WishController {
     }
 
     @GetMapping(path = "/all-wishes/{id}")
-    public Set<Wish> getAllWishesByUserId(@PathVariable Long id){
+    public List<Wish> getAllWishesByUserId(@PathVariable Long id){
         User user = userRepository.findById(id).get();
-        return wishRepository.getAllByUser(user);
+        List<Wish> wishes = wishRepository.getAllByUser(user);
+        return wishes;
     }
 
 
