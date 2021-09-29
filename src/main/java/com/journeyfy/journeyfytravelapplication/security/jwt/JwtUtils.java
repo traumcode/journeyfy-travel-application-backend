@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -26,12 +27,16 @@ public class JwtUtils {
     @Autowired
     UserRepository userRepository;
 
-    public String generateJwtToken(UserDetailsImplementation userPrincipal) {
-        return generateTokenFromUsername(userPrincipal.getUsername());
+    public String generateJwtToken(String username, List<String> roles) {
+        return generateTokenFromUsername(username, roles);
     }
 
-    public String generateTokenFromUsername(String username) {
-        return Jwts.builder().setSubject(username)
+    public String generateTokenFromUsername(String username, List<String> roles) {
+        Claims claims = Jwts.claims().setSubject(username);
+        claims.put("roles", roles);
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
@@ -42,6 +47,13 @@ public class JwtUtils {
         return Jwts.parser().setSigningKey(jwtSecret)
                 .parseClaimsJws(token).getBody().getSubject();
     }
+
+    public Claims getParsedToken(String token) {
+        return Jwts.parser().setSigningKey(jwtSecret)
+                .parseClaimsJws(token).getBody();
+    }
+
+
 
     public boolean validateJwtToken(String authToken) {
         try {
@@ -61,4 +73,6 @@ public class JwtUtils {
 
         return false;
     }
+
+
 }

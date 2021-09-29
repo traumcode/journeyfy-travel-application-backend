@@ -5,7 +5,7 @@ import com.journeyfy.journeyfytravelapplication.users.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-@Component("userSecurity")
+
 public class UserSecurity {
 
 }

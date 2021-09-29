@@ -25,6 +25,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@ToString
 @Table(name = "`user`", uniqueConstraints = {@UniqueConstraint(columnNames = "username"), @UniqueConstraint(columnNames = "email")})
 public class User {
     @Id
@@ -39,6 +40,7 @@ public class User {
     @Email
     private String email;
     @NotBlank
+    @JsonIgnore
     private String password;
     private String city;
     private String country;

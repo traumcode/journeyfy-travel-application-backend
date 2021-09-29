@@ -1,4 +1,7 @@
 package com.journeyfy.journeyfytravelapplication.users;
+import com.journeyfy.journeyfytravelapplication.exception.domain.EmailExistException;
+import com.journeyfy.journeyfytravelapplication.exception.domain.UserNotFoundException;
+import com.journeyfy.journeyfytravelapplication.exception.domain.UsernameExistException;
 import com.journeyfy.journeyfytravelapplication.payload.request.LoginRequest;
 import com.journeyfy.journeyfytravelapplication.payload.request.SignUpRequest;
 import com.journeyfy.journeyfytravelapplication.payload.response.JwtResponse;
@@ -22,6 +25,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -32,6 +36,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class UserController {
     private final UserRepository userRepository;
+    private final UserService userService;
     RoleRepository roleRepository;
     AuthenticationManager authenticationManager;
     JwtUtils jwtUtils;
@@ -44,30 +49,14 @@ public class UserController {
     }
 
     @GetMapping(path = "/profile/{username}")
-    public User getUserProfileByUsername(@PathVariable(value = "username") String username) {
-        return userRepository.findByUsername(username).get();
+    public ResponseEntity<User> getUserProfileById(@PathVariable(value = "username") String username) {
+        return new ResponseEntity<>(userService.findByUserName(username), HttpStatus.OK);
     }
 
-    //TODO update user info
-
-
-    @PostMapping(path = "/profile/{username}/edit-profile")
-    public ResponseEntity<?> editUserProfile(@PathVariable(value = "username") String username, @RequestBody User user) {
-        Optional<User> userFound = userRepository.findByUsername(username);
-        if (userFound.isPresent()) {
-            userFound.get().setUsername(user.getUsername());
-            userFound.get().setEmail(user.getEmail());
-            userFound.get().setCity(user.getCity());
-            userFound.get().setCountry(user.getCountry());
-            userFound.get().setDescription(user.getDescription());
-            userFound.get().setGender(user.getGender());
-            userFound.get().setJoinedDate(user.getJoinedDate());
-            userFound.get().setRoles(userFound.get().getRoles());
-            userFound.get().setPassword(userFound.get().getPassword());
-            userRepository.save(userFound.get());
-            return ResponseEntity.ok(userFound);
-        }
-        return ResponseEntity.badRequest().build();
+    @PutMapping(path = "/profile/{id}/edit-profile/{currentUsername}")
+    public ResponseEntity<User> editUserProfile(@PathVariable(value = "id") Long id, @PathVariable(value = "currentUsername") String currentUsername, @RequestBody User user) throws UserNotFoundException, UsernameExistException, EmailExistException {
+        User forResponse = userService.updateUser(id, currentUsername, user);
+        return new ResponseEntity<>(forResponse, HttpStatus.OK);
     }
 
     @PostMapping(path = "/login")
@@ -75,11 +64,12 @@ public class UserController {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetailsImplementation userDetailsImplementation = (UserDetailsImplementation) authentication.getPrincipal();
-        log.info(authentication.getPrincipal().toString());
-        String jwt = jwtUtils.generateJwtToken(userDetailsImplementation);
+
         List<String> roles = userDetailsImplementation.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
+        log.info(String.valueOf(roles));
+        String jwt = jwtUtils.generateJwtToken(loginRequest.getUsername(), roles);
         return ResponseEntity.ok(new JwtResponse(jwt, userDetailsImplementation.getId(), userDetailsImplementation.getUsername(),
                 userDetailsImplementation.getEmail(), roles));
     }
@@ -100,7 +90,7 @@ public class UserController {
         User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(), passwordEncoder.encode(signUpRequest.getPassword()), signUpRequest.getGender());
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
-        log.info(roleRepository.findByName(UserRole.ROLE_USER).toString());
+
         if (strRoles == null) {
             Role userRole = roleRepository.findByName(UserRole.ROLE_USER)
                     .orElseThrow(() -> new RuntimeException("error: Role is not found."));
@@ -127,6 +117,7 @@ public class UserController {
             });
         }
         user.setRoles(roles);
+        user.setJoinedDate(LocalDate.now());
         userRepository.save(user);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 

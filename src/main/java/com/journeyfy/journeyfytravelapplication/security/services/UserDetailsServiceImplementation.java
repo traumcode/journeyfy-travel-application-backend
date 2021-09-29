@@ -12,14 +12,15 @@ import javax.transaction.Transactional;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class UserDetailsServiceImplementation implements UserDetailsService {
 
     UserRepository userRepository;
 
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+        userRepository.save(user);
         return UserDetailsImplementation.build(user);
     }
 

@@ -1,9 +1,15 @@
 package com.journeyfy.journeyfytravelapplication.security.jwt;
 
 import com.journeyfy.journeyfytravelapplication.security.services.UserDetailsServiceImplementation;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,6 +23,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 @Slf4j
 public class AuthTokenFilter extends OncePerRequestFilter {
@@ -32,8 +40,16 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             log.info(jwt);
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
                 String username = jwtUtils.getUsernameFromJwtToken(jwt);
-                UserDetails userDetails = userDetailsServiceImplementation.loadUserByUsername(username);
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+
+                //------------
+                Claims body = jwtUtils.getParsedToken(jwt);
+                List<String> roles = (List<String>) body.get("roles");
+                List<SimpleGrantedAuthority> authorities = new LinkedList<>();
+                for (String role : roles) {
+                    authorities.add(new SimpleGrantedAuthority(role));
+                }
+
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
@@ -42,6 +58,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
+
 
     private String parseJwt(HttpServletRequest request) {
         String headerAuthorization = request.getHeader("Authorization");
