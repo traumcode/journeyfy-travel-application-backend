@@ -49,6 +49,7 @@ public class User {
     private Gender gender;
     private String description;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference
     private List<Post> posts;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
@@ -57,7 +58,8 @@ public class User {
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "user_trips", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "trip_id") )
+    @JoinTable(name = "user_trips", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "trip_id"))
+    @JsonIgnore
     private List<Trip> trips = new ArrayList<>();
 
     public User(String username, String email, String password, Gender gender) {

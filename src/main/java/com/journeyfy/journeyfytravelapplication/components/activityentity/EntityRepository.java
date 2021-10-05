@@ -14,4 +14,6 @@ public interface EntityRepository extends JpaRepository<Entity, String> {
     Entity getLastEntity();
 
     void deleteEntityById(String entityId);
+    Entity findEntityById(String entityId);
+
 }
