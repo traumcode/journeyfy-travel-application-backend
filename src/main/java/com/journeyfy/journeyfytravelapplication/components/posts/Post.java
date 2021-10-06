@@ -31,14 +31,14 @@ public class Post {
     @JsonBackReference
     private User user;
     private double rating;
-    private LocalDate postedAt;
+    private LocalDateTime postedAt;
+    private LocalDateTime editedAt;
     private int likes;
-//    @Enumerated(EnumType.STRING)
-//    private ActivityType activityType;
+    @Enumerated(EnumType.STRING)
+    private ActivityType activityType;
     @ManyToOne
     @JoinColumn(name = "entity_id")
     @JsonIgnore
     private Entity entity;
 
-    //TODO calculate rating based on review rating
 }
