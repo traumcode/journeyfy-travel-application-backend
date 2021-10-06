@@ -1,6 +1,7 @@
 package com.journeyfy.journeyfytravelapplication.components.posts;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.journeyfy.journeyfytravelapplication.components.activityentity.Entity;
 import com.journeyfy.journeyfytravelapplication.components.enums.ActivityType;
 import com.journeyfy.journeyfytravelapplication.users.User;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,13 +32,13 @@ public class Post {
     private User user;
     private double rating;
     private LocalDateTime postedAt;
+    private LocalDateTime editedAt;
     private int likes;
     @Enumerated(EnumType.STRING)
     private ActivityType activityType;
-
     @ManyToOne
     @JoinColumn(name = "entity_id")
+    @JsonIgnore
     private Entity entity;
 
-    //TODO calculate rating based on review rating
 }

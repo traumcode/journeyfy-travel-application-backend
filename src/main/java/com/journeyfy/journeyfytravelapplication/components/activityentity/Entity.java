@@ -75,7 +75,7 @@ public abstract class Entity {
 
     }
 
-    public Entity(String id, String pictureLink, String description, double rating, double price, String cityName, String name, String siteLink, String address, ActivityType activity) {
+    public Entity(String id, String pictureLink, String description, double rating, double price, String cityName, String name, String siteLink, String address, ActivityType activityType) {
         this.id = id;
         this.pictureLink = pictureLink;
         this.description = description;
@@ -88,12 +88,22 @@ public abstract class Entity {
         this.activityType = activityType;
     }
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Entity entity = (Entity) o;
         return id.equals(entity.id);
+    }
+
+    public void calculateReview(){
+        double acc = 0;
+        for (Post post : posts) {
+            acc = acc + post.getRating();
+        }
+        this.rating = acc / posts.size();
     }
 
 
