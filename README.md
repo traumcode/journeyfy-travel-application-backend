@@ -8,13 +8,13 @@
 
 Journeyfy is a travel application which is meant to ease the process of planning a trip.
 
+### Installation
+- clone the repo git@github.com:traumcode/journeyfy-travel-application-backend.git
+- open as a maven project
+- start the server
 
 
 ### Used technologies
-
-JavaScript
-
-CSS3
 
 Sprint Security
 
@@ -24,11 +24,9 @@ Java
 
 JPA and Hibernate
 
-Ant Design
+PostgreSQL
 
-React
-
-HTML
+Lombok
 
 ## Sneak Peak
 
