@@ -16,7 +16,7 @@ Journeyfy is a travel application which is meant to ease the process of planning
 
 ### Used technologies
 
-Sprint Security
+Spring Security
 
 Spring Boot
 
